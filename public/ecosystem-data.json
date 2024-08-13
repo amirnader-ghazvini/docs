@@ -1,6 +1,47 @@
 {
   "items": [
     {
+      "key": "floxdotlol",
+      "name": "Flox.lol",
+      "url": "https://flox.lol/",
+      "description": "Flox.lol is the best place to earn juicy $FXTL, while minting $FLOX, an $FXTL pegged flatcoin.",
+      "tags": ["DeFi", "MEME"],
+      "imageUrl": "https://flox.lol/logo400x400.png",
+      "twitterXUrl": "https://twitter.com/floxdotlol",
+      "telegramUrl": "https://t.me/floxdotlol"
+    },
+    {
+      "key": "gronkfrax",
+      "name": "Gronk",
+      "url": "https://gronkfrax.com/",
+      "description": "Gronk is based on one of Ethereum's most significant cultural icons and the Champion of FRAX.",
+      "tags": ["MEME"],
+      "imageUrl": "https://gronkfrax.com/icon.ico",
+      "twitterXUrl": "https://twitter.com/gronkfrax",
+      "telegramUrl": "https://t.me/gronkfrax"
+    },
+    {
+      "key": "glyph",
+      "name": "Glyph",
+      "url": "https://www.glyph.fi/",
+      "description": "Fraxtal's Native Credit Layer. Lend, Borrow, Earn.",
+      "tags": ["DeFi"],
+      "imageUrl": "https://raw.githubusercontent.com/Byte-Masons/glyph-resources/6016905154dd2be6e17bf07c2057eb388de76c80/glyphcolor.png",
+      "twitterXUrl": "https://x.com/GlyphFinance/",
+      "discordUrl": "https://discord.com/invite/TmSjuRquWN"
+    },
+    {
+      "key": "beefy",
+      "name": "Beefy",
+      "url": "https://beefy.com/",
+      "description": "Beefy is The Trusted Yield Optimizer that help users to safely and securely autocompound yields on their crypto. Beefy's web app delivers hundreds of DeFi yield opportunities from dozens of chains in a single, easy-to-use service.",
+      "tags": ["DeFi"],
+      "imageUrl": "https://beefy.com/d3a65a4f7107d2039fc05b7b775cd8d1.png",
+      "twitterXUrl": "https://twitter.com/beefyfinance",
+      "discordUrl": "https://t.co/gnWHy1srj5",
+      "telegramUrl": "https://t.co/HgPmJJlcjt"
+    },
+    {
       "key": "stably",
       "name": "Stably",
       "url": "https://www.stably.io/",
@@ -153,8 +194,9 @@
       "description": "Restake with YieldNest. A protocol delivering next-gen ETH Yield with isolated and tailored restaking strategies powered by EigenLayer. Simple, secure, and high-yielding LRTs.",
       "tags": ["DeFi"],
       "imageUrl": "https://docs.frax.com/images/ecosystem/yieldnest.png",
-      "twitterXUrl": "https://twitter.com/YieldNestFi",
-      "discordUrl": "https://discord.gg/ayAZuQgFaE"
+      "twitterXUrl": "https://x.com/YieldNestFi",
+      "discordUrl": "https://discord.com/invite/ayAZuQgFaE",
+      "telegramUrl": "https://t.me/YieldNest"
     },
     {
       "key": "realworldabs",
@@ -203,17 +245,6 @@
       "imageUrl": "https://docs.frax.com/images/ecosystem/fraxdoge.png",
       "twitterXUrl": "https://twitter.com/FraxDoge",
       "telegramUrl": "https://t.me/frxdoge"
-    },
-    {
-      "key": "lenx",
-      "name": "LENX Finance",
-      "url": "https://lenx.finance/",
-      "description": "LENX is the omnichain Bitcoin liquidity protocol, enabling supply of native Bitcoin as liquidity to borrow omnichain assets with built-in lending.",
-      "tags": ["DeFi"],
-      "imageUrl": "https://gateway.pinata.cloud/ipfs/QmRxRBCJPwJFAELrWZPU55JUcf9Uf9wp6fVLeFgK6VRYEf",
-      "twitterXUrl": "https://twitter.com/LENX_Finance",
-      "discordUrl": "https://discord.gg/LENX",
-      "telegramUrl": "https://t.me/LENXCommunity"
     },
     {
       "key": "kfc",
@@ -272,6 +303,137 @@
       "tags": ["Infra"],
       "imageUrl": "https://docs.frax.com/images/ecosystem/goldsky.png",
       "twitterXUrl": "https://twitter.com/goldskyio"
+    },
+    {
+      "key": "archly",
+      "name": "Archly",
+      "url": "https://archly.fi/",
+      "description": "Archly works to empower any user on any chain to engage in seamless cross-chain experiences through our DEX and Rainbow Road platforms.",
+      "tags": ["DeFi", "Infra"],
+      "imageUrl": "https://docs.archly.fi/archly.png",
+      "discordUrl": "https://discord.gg/nZQZ2Br9yc",
+      "telegramUrl": "https://t.me/ArchlyFinance",
+      "twitterXUrl": "https://twitter.com/ArchlyFinance"
+    },
+    {
+      "key": "vaultcraft",
+      "name": "VaultCraft",
+      "url": "https://vaultcraft.io/",
+      "description": "Build, deploy, and zap into automated yield strategies with VaultCraft.",
+      "tags": ["DeFi"],
+      "imageUrl": "https://app.vaultcraft.io/images/tokens/vcx.svg",
+      "twitterXUrl": "https://twitter.com/VaultCraft_io"
+    },
+    {
+      "key": "tellor",
+      "name": "Tellor",
+      "url": "https://tellor.io/",
+      "description": "Tellor is a versatile oracle protocol that can provide any data type permissionlessly, with crypto-economic liveness and security.",
+      "tags": ["Infra"],
+      "imageUrl": "https://docs.frax.com/images/ecosystem/tellor.png",
+      "twitterXUrl": "https://twitter.com/wearetellor"
+    },
+    {
+      "key": "supra",
+      "name": "Supra",
+      "url": "https://supra.com",
+      "description": "Supra as an “IntraLayer” is a powerful middleware network that brings our solutions together - oracles, VRFs, and a native cross-chain protocol through singular shared-security infrastructure.",
+      "tags": ["Infra", "DeFi"],
+      "imageUrl": "https://docs.frax.com/images/ecosystem/supra.png",
+      "twitterXUrl": "https://twitter.com/SUPRA_Labs"
+    },
+    {
+      "key": "nfts2me",
+      "name": "NFTs2Me",
+      "url": "https://nfts2me.com",
+      "description": "NFTs2Me is a multichain user-friendly comprehensive platform to create, deploy and manage your NFT collection and community, 100% free with advanced functionalities.",
+      "tags": ["NFT"],
+      "imageUrl": "https://docs.frax.com/images/ecosystem/nfts2me.png",
+      "discordUrl": "https://discord.com/invite/Usmgxj2Msk",
+      "telegramUrl": "https://t.me/nfts2me",
+      "twitterXUrl": "https://twitter.com/NFTs2Me"
+    },
+    {
+      "key": "grove",
+      "name": "Grove",
+      "url": "https://www.grove.city/",
+      "description": "Backed by thousands of independent, globally distributed nodes, Grove's RPC endpoints abstract the complexities of building multi-chain dApps on decentralized infrastructure.",
+      "tags": ["Infra"],
+      "imageUrl": "https://docs.frax.com/images/ecosystem/grove.png",
+      "twitterXUrl": "https://twitter.com/BuildWithGrove",
+      "discordUrl": "https://t.co/gnWHy1srj5"
+    },
+    {
+      "key": "API3",
+      "name": "API3 DAO",
+      "url": "https://api3.org/",
+      "description": "API3 provides secure and reliable first-party data feeds that establish seamless connections between API providers and oracle smart contracts, thereby eliminating the need for third-party intermediaries and bolstering the overall integrity of the data.",
+      "tags": ["Infra", "DeFi"],
+      "imageUrl": "https://docs.frax.com/images/ecosystem/API3white.png",
+      "twitterXUrl": "https://twitter.com/API3DAO",
+      "discordURL": "https://discord.gg/api3dao"
+    },
+    {
+      "key": "dein",
+      "name": "DEIN",
+      "url": "https://dein.fi/",
+      "description": "An AI-driven, omni-chain, decentralized marketplace and adjudication system providing infrastructure for insurance and credit default swaps on anything.",
+      "tags": ["Infra", "DeFi", "Insurance", "Credit default swap"],
+      "imageUrl": "https://3538207768-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F3q3w8sHRweEMFlACufqe%2Fuploads%2FgZ3nhm97pBUKunUcSsMc%2FDEIN%20logo%20cube%20color.png?alt=media&token=20492592-c32e-453f-9f57-9b89b70ccd32",
+      "twitterXUrl": "https://twitter.com/DEIN_fi",
+      "discordURL": "https://discord.gg/dein"
+    },
+    {
+      "key": "lagr",
+      "name": "Lagrange",
+      "url": "https://www.lagrange.dev/",
+      "description": "A hyper-parallel Zero-Knowledge Coprocessor that enables verifiable computations at a big data scale across various blockchains.",
+      "tags": ["Infra", "DeFi"],
+      "imageUrl": "https://docs.frax.com/images/ecosystem/lagrange.png",
+      "twitterXUrl": "https://twitter.com/lagrangedev",
+      "discordURL": "https://discord.gg/Jkxvhmq2"
+    },
+    {
+      "key": "comet",
+      "name": "Comet Protocol",
+      "url": "https://cometbridge.app/",
+      "description": "The First Seamless Interlink Communication Protocol Between All Bitcoin and Ethereum Ecosystems.",
+      "tags": ["Infra", "Bridge"],
+      "imageUrl": "https://raw.githubusercontent.com/cometbridge/assets/main/comet.png",
+      "twitterXUrl": "https://x.com/Comet_Protocol",
+      "discordURL": "https://discord.com/invite/ZTFQNNXcYs"
+    },
+    {
+      "key": "Cycnus",
+      "name": "Cycnus University",
+      "url": "https://www.cycnus.org",
+      "description": "The Cycnus University is committed to promoting the development of Web 3.0 + X disciplines, using Fraxtal as the digitalized infrastructure to build an innovative and dynamic educational platform that allows everyone to realize their blockchain dreams.",
+      "tags": ["DAO", "Infra", "Education"],
+      "imageUrl": "https://docs.frax.com/images/ecosystem/CycnusUniversity.png",
+      "twitterXUrl": "https://x.com/CycnusDAO",
+      "discordURL": "https://discord.gg/mSDfzsEbxJ",
+      "telegramUrl": "https://t.me/CycnusUniversity"
+    },
+    {
+      "key": "gemach",
+      "name": "Gemach Gbot Telegram bot",
+      "url": "https://t.me/GemachEVM_Bot?start=558596665",
+      "description": "Introducing the Gemach Gbot, your ultimate trading bot for EVM chains. With advanced features like token sniping, limit orders, and real-time alerts, Gbot automates and optimizes your trading strategies. Plus, our lucrative referral program lets you earn 30% rewards on every referral.",
+      "tags": ["Infra", "Bridge", "DeFi"],
+      "imageUrl": "https://docs.frax.com/images/ecosystem/gemach.png",
+      "twitterXUrl": "https://x.com/gemach_io",
+      "discordURL": "https://discord.com/invite/QDHsGPQdx3",
+      "telegramUrl": "https://t.me/gemach_public"
+    },
+    {
+      "key": "gasdotzip",
+      "name": "Gas.zip",
+      "url": "https://www.gas.zip/",
+      "description": "Fastest one-stop gas refuel bridge for over 200+ chains.",
+      "tags": ["Infra", "Bridge", "DeFi"],
+      "imageUrl": "https://www.gas.zip/gasLogo400x400.png",
+      "twitterXUrl": "https://x.com/gasdotzip",
+      "discordURL": "https://discord.com/invite/gasdotzip"
     }
   ]
 }
