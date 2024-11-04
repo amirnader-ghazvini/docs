@@ -554,6 +554,17 @@
       "imageUrl": "https://docs.frax.com/images/ecosystem/popcoin.png",
       "twitterXUrl": "https://x.com/popcoindotfun",
       "telegramUrl": "https://t.me/popcoinfun"
+    },
+    {
+      "key": "zeroway",
+      "name": "ZeroWay",
+      "url": "https://zeroway.io/",
+      "description": "Zeroway is a multifunctional interchain platform. Built on Hyperlane, is set to use omnichain technology.",
+      "tags": ["Infra", "Bridge", "NFT"],
+      "imageUrl": "https://ipfs.io/ipfs/QmfNE2Ud3B7V8AWK4EWN2qYthwftDWode4hp6jGSJRfkhY",
+      "twitterXUrl": "https://x.com/zeroway_io",
+      "discordURL": "https://discord.com/invite/bQNEWkXdDG",
+      "telegramUrl": "https://t.me/zeroway_announcements"
     }
   ]
 }
