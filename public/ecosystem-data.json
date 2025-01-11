@@ -635,6 +635,16 @@
       "imageUrl": "https://portalsfi.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Ff6ec7fbe-fd28-4a26-92bc-240fd217ab8b%2Facf65513-6bba-4d77-b8cc-275fca1db637%2Flogo-512x512.png?table=block&id=0e9613ec-3183-45b9-8567-88f4743173dc&spaceId=f6ec7fbe-fd28-4a26-92bc-240fd217ab8b&width=1020&userId=&cache=v2",
       "twitterXUrl": "https://x.com/portals_fi",
       "discordURL": "https://discord.gg/JKDYTXN8hm"
+    },
+    {
+      "key": "vnx",
+      "name": "VNX",
+      "url": "https://vnx.io/",
+      "description": "VNX, a European licensed token issuance platform, brings real-world assets (RWA) to crypto with fiat-referencing tokens (VEUR, VCHF) and tokenized gold (VNXAU).",
+      "tags": ["DeFi", "OnRamp"],
+      "imageUrl": "https://vnx.li/wp-content/uploads/2025/01/VNX_logo_square.png",
+      "twitterXUrl": "https://x.com/vnx_platform",
+      "telegramUrl": "https://t.me/vnx_li"
     }
   ]
 }
