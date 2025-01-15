@@ -614,6 +614,17 @@
       "imageUrl": "https://velodrome.finance/brand-kit/symbol.svg",
       "twitterXUrl": "https://x.com/VelodromeFi",
       "discordURL": "https://discord.gg/velodrome"
+    },
+    {
+      "key": "dzap",
+      "name": "DZap",
+      "url": "https://dzap.io/",
+      "description": "Unifying DeFi with Aggregation and Zapping. Powered by Zapping AI Agents",
+      "tags": ["DeFi", "AI", "Infra", "Bridge", "DEX Aggregator"],
+      "imageUrl": "https://docs.frax.com/images/ecosystem/dzap.png",
+      "twitterXUrl": "https://x.com/dzap_io",
+      "telegramUrl": "https://t.me/dzap_io",
+      "discordUrl": "https://discord.gg/rnW8wh2jr8"
     }
   ]
 }
