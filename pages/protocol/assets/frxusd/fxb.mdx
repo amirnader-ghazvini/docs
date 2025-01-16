@@ -1,0 +1,140 @@
+---
+title: Frax Bonds
+lang: en-US
+---
+import * as mainnet from '~/misc/constants/mainnet';
+
+# Frax Bonds
+*Zero-coupon bonds that help stabilize the frxUSD peg*
+
+## Overview
+FXB tokens are simple, trustless tokens that resemble a [zero-coupon bond](https://www.investopedia.com/terms/z/zero-couponbond.asp) that converts to the frxUSD stablecoin upon maturity. FXB AMOs auction off FXBs at a discount to face value. This discount provides the equivalent of RWA yield to buyers without the assumption of RWA risk. They also help remove circulating frxUSD and stabilize the peg, as users cannot sell frxUSD that is locked (until maturity) in a FXB.
+
+<img
+  src="/images/protocol/fxb.png"
+  alt="frxUSD Logo"
+  width="200"
+  style={{ display: 'block', margin: 'auto', marginTop: '20px' }}
+/>
+
+## Details
+FXBs are debt tokens denominated in frxUSD stablecoins, not a claim on any other asset or collateral. FXB tokens are only convertible to frxUSD stablecoins, they do not guarantee frxUSD peg, frxUSD value, or yield/interest denominated in any other asset except frxUSD. FXBs do not entitle the holder to any asset offchain or onchain (other than frxUSD stablecoins). Thus, FXBs are not redeemable for US Treasury Bills nor any real-world asset, are not directly backed/collateralized by them (or any specific asset), and do not have any utility except trustlessly converting to frxUSD stablecoins at the pre-programmed maturity timestamp generated at their minting. This is important and not merely a semantic distinction because it directly defines the normative and economic property of FXBs. Frax Bond tokens only guarantee that they convert to frxUSD on a one-to-one basis through smart contracts that issue them.
+
+FXBs allow the formation of a yield curve to price the time value of lending frxUSD back to the protocol itself. Each FXB token is a fungible ERC20 token deployed from an onchain factory contract. **At FXB minting time, frxUSD stablecoins are transferred into the FXB contract for conversion on maturity.**  This prevents any external actions being necessary for the full FXB cycle to occur and entirely remains trustless. There can be multiple FXB series circulating at all times and no limit for the minimum or maximum maturity timestamp for FXBs deployed from the factory.
+
+FXBs mature at the end of the day of their maturity date in UTC and have no expiration.  For example, the 20261231 FXB is able to be burned back for its' corresponding frxUSD as soon as 1893456000.
+
+<figure style={{ textAlign: 'center', marginTop: '20px' }}>
+  <img
+    src="/images/protocol/fxb-black.png"
+    alt="FXB system"
+    style={{ display: 'block', margin: 'auto' }}
+  />
+  <figcaption style={{ marginTop: '10px', fontSize: '14px', color: '#555' }}>
+    FXB system economical flow
+  </figcaption>
+</figure>
+
+
+## Series Auctions
+FXB series price discovery happens through a continuous gradual Dutch auction (GDA) auction system that has quantity and price limit set by the Frax team.  This guarantees that FXB tokens are not sold for prices lower than the floor limit. Auctions happen through the FXB AMO contract and are trustless, permissionless, and non-custodial.
+New auctions can happen at any time by the [`Fraxtal Comptroller`](https://fraxscan.com/address/0xC4EB45d80DC1F079045E75D5d55de8eD1c1090E6) and [`Fraxtal AMO Operator`](https://fraxscan.com/address/0x5f25218ed9474b721d6a38c115107428E832fA2E), initiated through the [`FXB AMO`](https://fraxscan.com/address/0xE6ed07952dC9993DD52c6d991Fa809C00eBE58a3).
+
+<figure style={{ textAlign: 'center', marginTop: '20px' }}>
+  <img
+    src="/images/protocol/fxb-amo-black.png"
+    alt="FXB system"
+    style={{ display: 'block', margin: 'auto' }}
+  />
+  <figcaption style={{ marginTop: '10px', fontSize: '14px', color: '#555' }}>
+    Complete transaction flow of FXB system
+  </figcaption>
+</figure>
+
+
+## Minting & Redemptions: Origin chain vs. Bridged chain
+As mentioned, **at FXB minting time, frxUSD stablecoins are transferred into the FXB contract for conversion on maturity.**  An FXB can be broken down into two types, Origin and Bridged, referring to the chain the FXB is originally minted on.  This differentiation is needed as the Origin chain, the chain the FXB was originally minted from, is where the FXB owner is able to burn their FXB for the equivalent frxUSD after maturity.  An FXB which, for example, originates on Fraxtal and is then bridged to Fraxtal, is considered Bridged, whereby the underlying frxUSD remains on Fraxtal and the FXB must be bridged back to redeem the frxUSD.  Similarly, the FXB must be minted on the origin chain to contain the underlying frxUSD.
+
+Why does this happen?  When an FXB is originally created, it is done through the [`FXBFactory`](https://github.com/FraxFinance/dev-frax-bonds/blob/develop/src/contracts/FXBFactory.sol).  This origin FXB contains the code to [mint](https://github.com/FraxFinance/dev-frax-bonds/blob/3608454b1e8a83b77b60afbd7ca541e2594bb1cd/src/contracts/FXB.sol#L110-L114) and [burn](https://github.com/FraxFinance/dev-frax-bonds/blob/3608454b1e8a83b77b60afbd7ca541e2594bb1cd/src/contracts/FXB.sol#L130-L134).  Once the FXB is bridged, the destination chain creates the FXB from the bridge [`ERC20Factory`](https://etherscan.io/address/0x6ca98f43719231d38f6426db64c7f3d5c7ce7876#code).  This bridged version can only be minted and burned (redeemed) by the bridge.
+
+## Contracts
+To trustfully import contracts to your local repository, refer to the [frax-template](https://github.com/fraxfinance/frax-template).
+
+### Operations Contracts
+
+| Contract            | Ethereum                                               | Fraxtal                                                |
+| :------------------ | :----------------------------------------------------- | :----------------------------------------------------- |
+| FXB Factory         | {<code>{mainnet.fxbAddresses.FXBFactory.L1}</code>}    | {<code>{mainnet.fxbAddresses.FXBFactory.L2}</code>}    |
+| Auction Factory     | {<code>{mainnet.fxbAddresses.AuctionFactory.L1}</code>}| {<code>{mainnet.fxbAddresses.AuctionFactory.L2}</code>}|
+| FXB AMO             | {<code>{mainnet.fxbAddresses.AMO.L1}</code>}           | {<code>{mainnet.fxbAddresses.AMO.L2}</code>}           |
+| AMO Operator (msig) | {<code>{mainnet.fxbAddresses.AMOOperator.L1}</code>}   | {<code>{mainnet.fxbAddresses.AMOOperator.L2}</code>}   |
+| AMO Timelock (msig) | {<code>{mainnet.fxbAddresses.AMOTimelock.L1}</code>}   | {<code>{mainnet.fxbAddresses.AMOTimelock.L2}</code>}   |
+
+### FXB Contracts
+<details>
+<summary>FXB 2024</summary>
+- **Origin Chain:** Ethereum<br />
+- **Maturity Date:** December 31, 2024
+
+| Contract  | Ethereum                                               | Fraxtal                                                |
+| :-------- | :----------------------------------------------------- | :----------------------------------------------------- |
+| Token     | {<code>{mainnet.fxbAddresses.FXB2024.L1}</code>}       | {<code>{mainnet.fxbAddresses.FXB2024.L2}</code>}       |
+| Auction   | {<code>{mainnet.fxbAddresses.FXB2024Auction.L1}</code>}| {<code>{mainnet.fxbAddresses.FXB2024Auction.L2}</code>}|
+| Oracle    | {<code>{mainnet.fxbAddresses.FXB2024Oracle.L1}</code>} | {<code>{mainnet.fxbAddresses.FXB2024Oracle.L2}</code>} |
+</details>
+<details>
+<summary>FXB 2025</summary>
+- **Origin Chain:** Fraxtal<br />
+- **Maturity Date:** December 31, 2025
+
+| Contract  | Ethereum                                               | Fraxtal                                                |
+| :-------- | :----------------------------------------------------- | :----------------------------------------------------- |
+| Token     | {<code>{mainnet.fxbAddresses.FXB2025.L1}</code>}       | {<code>{mainnet.fxbAddresses.FXB2025.L2}</code>}       |
+| Auction   | {<code>{mainnet.fxbAddresses.FXB2025Auction.L1}</code>}| {<code>{mainnet.fxbAddresses.FXB2025Auction.L2}</code>}|
+| Oracle    | {<code>{mainnet.fxbAddresses.FXB2025Oracle.L1}</code>} | {<code>{mainnet.fxbAddresses.FXB2025Oracle.L2}</code>} |
+</details>
+<details>
+<summary>FXB 2026</summary>
+- **Origin Chain:** Ethereum<br />
+- **Maturity Date:** December 31, 2026
+
+| Contract  | Ethereum                                               | Fraxtal                                                |
+| :-------- | :----------------------------------------------------- | :----------------------------------------------------- |
+| Token     | {<code>{mainnet.fxbAddresses.FXB2026.L1}</code>}       | {<code>{mainnet.fxbAddresses.FXB2026.L2}</code>}       |
+| Auction   | {<code>{mainnet.fxbAddresses.FXB2026Auction.L1}</code>}| {<code>{mainnet.fxbAddresses.FXB2026Auction.L2}</code>}|
+| Oracle    | {<code>{mainnet.fxbAddresses.FXB2026Oracle.L1}</code>} | {<code>{mainnet.fxbAddresses.FXB2026Oracle.L2}</code>} |
+</details>
+<details>
+<summary>FXB 2027</summary>
+- **Origin Chain:** Fraxtal<br />
+- **Maturity Date:** December 31, 2027
+
+| Contract  | Ethereum                                               | Fraxtal                                                |
+| :-------- | :----------------------------------------------------- | :----------------------------------------------------- |
+| Token     | {<code>{mainnet.fxbAddresses.FXB2027.L1}</code>}       | {<code>{mainnet.fxbAddresses.FXB2027.L2}</code>}       |
+| Auction   | {<code>{mainnet.fxbAddresses.FXB2027Auction.L1}</code>}| {<code>{mainnet.fxbAddresses.FXB2027Auction.L2}</code>}|
+| Oracle    | {<code>{mainnet.fxbAddresses.FXB2027Oracle.L1}</code>} | {<code>{mainnet.fxbAddresses.FXB2027Oracle.L2}</code>} |
+</details>
+<details>
+<summary>FXB 2029</summary>
+- **Origin Chain:** Fraxtal<br />
+- **Maturity Date:** December 31, 2029
+
+| Contract  | Ethereum                                               | Fraxtal                                                |
+| :-------- | :----------------------------------------------------- | :----------------------------------------------------- |
+| Token     | {<code>{mainnet.fxbAddresses.FXB2029.L1}</code>}       | {<code>{mainnet.fxbAddresses.FXB2029.L2}</code>}       |
+| Auction   | {<code>{mainnet.fxbAddresses.FXB2029Auction.L1}</code>}| {<code>{mainnet.fxbAddresses.FXB2029Auction.L2}</code>}|
+| Oracle    | {<code>{mainnet.fxbAddresses.FXB2029Oracle.L1}</code>} | {<code>{mainnet.fxbAddresses.FXB2029Oracle.L2}</code>} |
+</details>
+<details>
+<summary>FXB 2055</summary>
+- **Origin Chain:** Fraxtal<br />
+- **Maturity Date:** December 31, 2055
+
+| Contract  | Ethereum                                               | Fraxtal                                                |
+| :-------- | :----------------------------------------------------- | :----------------------------------------------------- |
+| Token     | {<code>{mainnet.fxbAddresses.FXB2055.L1}</code>}       | {<code>{mainnet.fxbAddresses.FXB2055.L2}</code>}       |
+| Auction   | {<code>{mainnet.fxbAddresses.FXB2055Auction.L1}</code>}| {<code>{mainnet.fxbAddresses.FXB2055Auction.L2}</code>}|
+| Oracle    | {<code>{mainnet.fxbAddresses.FXB2055Oracle.L1}</code>} | {<code>{mainnet.fxbAddresses.FXB2055Oracle.L2}</code>} |
+</details>
+

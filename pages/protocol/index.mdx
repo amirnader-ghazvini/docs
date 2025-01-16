@@ -3,6 +3,36 @@ title: Frax Protocol
 lang: en-US
 ---
 
-# Frax Protocol
+# Frax Ecosystem Overview
 
-Frax Protocol docs are currently available on [docs.frax.finance](https://docs.frax.finance)
+*Full version of legacy Frax Protocol docs are currently available on [docs.frax.finance](https://docs.frax.finance)*
+
+Frax currently issues 3 stablecoins: frxUSD, FPI, and frxETH, along with numerous other non-stablecoin tokens. There are also multiple contract groups or "subprotocols" within it that integrate these tokens to provide utility and stability. Core concepts to understand the unified Frax Finance ecosystem include:
+
+### Stablecoins
+- **frxUSD** – a USD pegged asset.
+- **FPI** – The Frax Price Index (FPI) stablecoin, the first stablecoin pegged to a basket of consumer goods creating its own unit of account separate from any nation state denominated money.
+- **frxETH** – a Liquid Staking Derivative (LSD) token pegged to ETH, and intended for use as a replacement for WETH in smart contracts. sfrxETH is the complementary ERC4626 token that accrues value from ETH staking rewards, MEV, etc.
+frxETH V2 is expected to allow anonymous validator pools that can use escrowed exit messages as collateral to borrow additional ETH.
+### Subprotocols
+- **Fraxswap** – Native AMM (based on Uniswap V2) with added time weighted average market maker (TWAMM) orders used by the Frax Protocol for rebalancing collateral, mints/redemptions, expanding/contracting stablecoin supply, and deploying protocol owned liquidity onchain.
+- **Borrow AMM (BAMM)** – Borrowing/lending module built on top of Fraxswap. Does not need an outside oracle or external liquidity to function safely. Borrowers rent liquidity provided by lenders to automatically leverage up and down, such that they can stay solvent even in the case of high volatility.
+- **Fraxlend** – Permissionless lending market that is the lending facility for Frax-based stablecoins. Allows debt origination, customized non-custodial loans, and onboarding collateral assets to the Frax Finance economy.
+- **AMOs / Protocol-owned Liquidity (POL)** – The protocol operates numerous Algorithmic Market Operation (AMO) smart contracts to manage its collateral and use it to generate revenue. Examples include the Fraxlend AMO, Curve AMO, and Uniswap V3 AMO.
+- **Fraxtal** – A modular L2 chain, based on Optimism technology, that uses frxETH as the gas token.
+- **Fraxtal Points FXTL** – Users earn FXTL for useful activities on Fraxtal, such as spending gas, creating heavily-used contracts, and farming in specific pools.
+- **Frax Bonds (FXB)** – Zero coupon bond-like tokens auctioned at below 1 frxUSD, but exchangeable for 1 frxUSD upon maturity. Used to help lock frxUSD liquidity and stabilize the frxUSD peg.
+- **Staked Frax USD (sfrxUSD)** – ERC4626 staking vault that distributes part of the Frax Protocol yield weekly to stakers. Denominated in frxUSD stablecoins.
+- **Frax Share (FXS)** – The base-layer governance token for the entire Frax ecosystem of smart contracts. It accrues fees, revenue, and excess collateral value.
+- **veFXS** – Users lock FXS for a variable amount of time and receive voting power and farming weight boosts. Inspired by Curve's veCRV.
+- **Gauge Rewards System** – The community can propose new gauge rewards for strategies that integrate Frax-based stablecoins. FXS emissions are fixed, halve each year, and entirely flow to different gauges based on the votes of veFXS stakers. Modified from Curve.
+
+## Links
+- Website: https://app.frax.finance
+- Telegram: https://t.me/fraxfinance
+- Telegram (announcements / news): https://t.me/fraxfinancenews
+- Discord: https://discord.com/invite/fraxfinance
+- Twitter: https://twitter.com/fraxfinance
+- Medium / Blog: https://fraxfinancecommunity.medium.com/
+- Governance (discussion): https://gov.frax.finance/
+- Governance (voting): https://snapshot.org/#/frax.eth

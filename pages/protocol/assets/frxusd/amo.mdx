@@ -1,0 +1,78 @@
+---
+title: AMOs
+lang: en-US
+---
+
+# AMOs
+
+_The Interface Contracts Between frxUSD Stablecoins and Subprotocols_
+
+### Overview
+
+**“Algorithmic Market Operations” (AMO)** contracts are autonomous contracts that enact pre-programmed monetary policy into a specific subprotocol (either internally built and owned by Frax Protocol such as Fraxlend and Fraxswap or external such as [Curve](https://curve.fi)). This means that AMO controllers can perform open market operations such as minting FRAX stablecoins into an AMM or lending newly minted FRAX into a money market protocol if certain preprogrammed conditions are met or actions approved by onchain governance. AMOs can interact with any separate protocol allowing FRAX v3 to add, remove, and combine any stability mechanism desired without changing the protocol.
+
+### **Curve AMO**
+
+The Curve AMO mints FRAX stablecoins in select Curve pools approved by governance. The AMO also withdraws FRAX and burns supply to keep the exchange rate of each Curve pool in a tight range based on the USD price of FRAX by the reference oracles.
+
+The Curve AMO contract address is [`0x49ee75278820f409ecd67063D8D717B38d66bd71`](https://etherscan.io/address/0x49ee75278820f409ecd67063D8D717B38d66bd71)
+
+<figure style={{ textAlign: 'center', marginTop: '20px' }}>
+  <img
+    src="/images/protocol/curve-amo-black.png"
+    alt="Curve AMO"
+    style={{ display: 'block', margin: 'auto' }}
+  />
+  <figcaption style={{ marginTop: '10px', fontSize: '14px', color: '#555' }}>
+    Complete transaction flow of Curve AMO
+  </figcaption>
+</figure>
+
+### **Fraxlend AMO**
+
+[Fraxlend](https://docs.frax.finance/fraxlend/fraxlend-overview) is a permissionless, isolated lending market subprotocol of the Frax Finance ecosystem. Anyone can lend FRAX stablecoins into isolated Fraxlend markets where users deposit collateral to borrow FRAX and pay a [dynamic interest rate](https://docs.frax.finance/fraxlend/advanced-concepts/interest-rates) to lenders. The Fraxlend AMO lends newly created FRAX into Fraxlend pairs that are approved by the [frxGov](https://docs.frax.finance/frax-governance/frax-governance-overview) process and earns interest from borrowers.
+
+The Fraxlend AMO [live stats](https://facts.frax.finance/fraxlend/amo) are displayed on Frax Facts.
+
+The Fraxlend AMO contract addresses:
+
+Ethereum Mainnet - Fraxlend AMO V1: [`0x0Ed8fA7FC63A8eb5487E7F87CAF1aB3914eA4eCa`](https://etherscan.io/address/0x0ed8fa7fc63a8eb5487e7f87caf1ab3914ea4eca)
+
+Ethereum Mainnet - Fraxlend AMO V3: [`0xf6E697e95D4008f81044337A749ECF4d15C30Ea6`](https://etherscan.io/address/0xf6e697e95d4008f81044337a749ecf4d15c30ea6)
+
+Arbitrum One - Fraxlend AMO V3: [`0xCDeE1B853AD2E96921250775b7A60D6ff78fD8B4`](https://arbiscan.io/address/0xcdee1b853ad2e96921250775b7a60d6ff78fd8b4)
+
+Fraxtal - Fraxlend AMO V3: [`0x58C433482d74ABd15f4f8E7201DC4004c06CB611`](https://fraxscan.com/address/0x58C433482d74ABd15f4f8E7201DC4004c06CB611)
+
+<figure style={{ textAlign: 'center', marginTop: '20px' }}>
+  <img
+    src="/images/protocol/Fraxlend-AMO-Black.png"
+    alt="Fraxlend AMO"
+    style={{ display: 'block', margin: 'auto' }}
+  />
+  <figcaption style={{ marginTop: '10px', fontSize: '14px', color: '#555' }}>
+    Complete transaction flow of Fraxlend AMO
+  </figcaption>
+</figure>
+
+### **Fraxswap TWAMM AMO**
+
+The Fraxswap TWAMM AMO loads [time-weighted average market maker orders](https://docs.frax.finance/fraxswap/technical-specifications#time-weighted-average-market-maker-twamm) into the Fraxswap AMM to buy or sell collateral over a long period of time. This allows for expanding of the FRAX balance sheet by buying collateral with FRAX stablecoins or contracting the supply of FRAX by selling balance sheet assets through TWAMM orders. The AMO can also be used to repurchase FXS tokens with protocol revenue/fees.
+
+The Fraxswap TWAMM AMO contract address is [`0x629C473e0E698FD101496E5fbDA4bcB58DA78dC4`](https://etherscan.io/address/0x629C473e0E698FD101496E5fbDA4bcB58DA78dC4)
+
+### **FXB AMO**
+
+The FRAX Bonds AMO provides the FRAX ecosystem an ability to sell FRAX "bonds" at a discounted rate to the market through FRAX governance. Each unit of FRAX bond (also called FXB) is equal to one unit of locked FRAX, and at a pre-determined date the owner of the FXB is able to burn their FXB and receive their equal unit of FRAX.
+
+Through the FXB AMO, the Frax team auctions off FXBs to the public. The FRAX received by the AMO is then sent to FinresPBC.
+
+Technical specifications such as interface and access control can be found on [Github](https://github.com/fraxfinance/frax-bonds-amo).
+
+Ethereum Mainnet FXB AMO: [`0x452420df4AC1e3db5429b5FD629f3047482C543C`](https://etherscan.io/address/0x452420df4ac1e3db5429b5fd629f3047482c543c)
+
+Fraxtal FXB AMO: [`0xE6ed07952dC9993DD52c6d991Fa809C00eBE58a3`](https://fraxscan.io/address/0xE6ed07952dC9993DD52c6d991Fa809C00eBE58a3)
+
+### **Miscellaneous**
+
+Various protocol-owned multisig addresses hold and manage revenue-earning positions in accordance with governance decisions. Examples include Curve/Convex farms and directly held tokens like sDAI and sfrxETH. The largest multisig [`0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27`](https://etherscan.io/address/0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27) is on Ethereum. You can see a full list of positions [here](https://facts.frax.finance/frax/balance-sheet).

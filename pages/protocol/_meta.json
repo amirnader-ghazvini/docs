@@ -1,9 +1,11 @@
 {
-  "index": {
-    "display": "children",
-    "title": "Frax Protocol",
-    "theme": {
-      "sidebar": false
-    }
-  }
+  "index": "Overview",
+  "assets": "Assets",
+  "subprotocols": "Subprotocols",
+  "fxs": "FXS & veFXS",
+  "crosschain": "Crosschain Solutions",
+  "governance": "Governance",
+  "security": "Security",
+  "integration": "Integration",
+  "miscellaneous": "Miscellaneous"
 }

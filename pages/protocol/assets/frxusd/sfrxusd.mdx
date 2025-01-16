@@ -1,0 +1,54 @@
+---
+title: Frax USD Stablecoin
+lang: en-US
+---
+
+# The Staked Frax USD Yielding Stablecoin
+## Overview
+**Staked Frax USD (sfrxUSD)** is the yielding stablecoin implemented as an ERC4626 token. sfrxUSD is fully redeemable for frxUSD at an increasing rate proportional to the yield mechanism (described below). sfrxUSD is not rebasing and can always be redeemed for the underlying frxUSD with no unstaking fee or price impact. <br />
+sfrxUSD is unique in yielding design in that it targets a benchmark-rate strategy that alternates between the best of three governance-approved strategies: **carry-trade, algorithmic market operations (AMOs), and the Interest on Reserve Balances/T-Bill (IORB) rate**. This insures that sfrxUSD’s APY is the most competitive yield onchain.
+
+<img
+  src="/images/protocol/sfrxUSD.png"
+  alt="sfrxUSD Logo"
+  width="200"
+  style={{ display: 'block', margin: 'auto', marginTop: '20px' }}
+/>
+
+## Benchmark Yield Strategy (BYS):
+
+The BYS is the system which allocates all frxUSD staked in the sfrxUSD yield vault to the top yield venue in the current market condition.
+
+If carry-trade yield is higher than DeFi yields, then all frxUSD staked in the yield vault will be allocated to carry-trade strategies. If the carry-trade yield is lesser than DeFi AMO strategies, the frxUSD staked in the yield vault will be allocated to DeFi venues through AMOs. If the highest yield is the IORB/T-Bill rate, then frxUSD staked in the yield vault will be allocated to RWA strategies holding short-dated (>90 days) United States Treasury Bills. Thus as the amount of frxUSD staked in the yield vault increases, the yield strategy will adjust to the best source of yield in current market conditions allowing sfrxUSD holders to earn the highest risk-adjusted yield onchain in nearly all market conditions without having to hold any other yielding USD stablecoin.
+
+<figure style={{ textAlign: 'center', marginTop: '20px' }}>
+  <img
+    src="/images/protocol/sfrxUSD-BYS.png"
+    alt="sfrxUSD BYS"
+    width="500"
+    style={{ display: 'block', margin: 'auto' }}
+  />
+  <figcaption style={{ marginTop: '10px', fontSize: '14px', color: '#555' }}>
+    sfrxUSD BYS consistently achieves the highest risk-adjusted yields in DeFi for sfrxUSD
+    holders.
+  </figcaption>
+</figure>
+
+### BYS Strategies
+
+**BYS Carry-Trade venues:**
+- Ethena
+- Superstate
+<br />
+
+**BYS DeFi venues:**
+  - Aave
+  - Curve Finance
+  - Convex Finance
+  - Compound Finance
+<br />
+
+**BYS IORB/T-Bill venues:**
+  - Blackrock
+  - FinresPBC
+<br />
