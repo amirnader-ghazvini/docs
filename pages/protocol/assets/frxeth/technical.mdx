@@ -1,0 +1,35 @@
+---
+title: Frax Ether Technical Specifications
+lang: en-US
+---
+
+# Technical Specifications
+## frxETH
+frxETH shares much of its code with both the Frax and FPI stablecoins, and implements the ERC-2612 standard, allowing spender approvals to be made via ERC-712 signatures passed to the ```permit()``` function.
+
+## sfrxETH
+sfrxETH is a ERC-4626 compliant vault. sfrxETH is obtained by first approving the sfrxETH contract as a frxETH spender, and then calling ```mint()``` (mints a specific number of sfrxETH) or ```deposit()``` (deposits a specific amount of frxETH). The approval step and the minting step can be combined with ```depositWithSignature()``` or ```mintWithSignature()```, removing the need for two seperate transactions.
+
+As validators generate staking yield, an equivalent amount of frxETH is minted and sent to the sfrxETH contract. This means that once rewards are synced, one's sfrxETH may be redeemed for a greater amount of frxETH than it took to mint.
+
+To prevent malicious users from stealing a validator yield distribution to the vault, reward distributions are smoothed over time cycles. Whenever ```syncRewards()``` is called on the sfrxETH contract, any additional frxETH added to the contract over the contract's internal balance is queued to be distributed linearly over the remainder of a cycle window.
+
+sfrxETH is also ERC-2612 compliant, allowing the use of signature permits.
+
+For real time information and monitoring of validators, see Frax Facts.
+
+## frxETHMinter
+The frxETHMinter mints frxETH when it receives ETH either through the ```submit()``` or ```receive()``` function. Whenever a submission pushes the minter balance over 32 ETH, the contract pops a validator's deposit credentials off of a stack and passes the 32 eth deposit along with the credentials to the ETH 2.0 deposit contract, automatically spinning up a new validator.
+
+As needed, new credentials are added to the stack to ensure that there are always validators ready to take deposits. If at any time the contract runs out of validators, frxETH will continue to be minted as normal (unless paused) but no new validators will be spun up until more are added to the stack.
+
+The withdrawal credential is shared by all the validators on the stack, meaning all validators share the same withdrawal address. This address is set to the Frax treasury contract at launch, so that withdrawals may be safely handled once live.
+
+In addition, when adding validators it is necessary to pass the DepositDataRoot as provided when generating the deposit data, this is to provide redundancy in ensuring a validator with misinputted parameters will not be accepted when ETH is deposited.
+
+The protocol may set a ratio of funds to withold when ETH is submitted. These funds are not counted when gathering 32 ETH deposits to spin up validators and are instead used to market make across DeFi, ensuring liquid markets for frxETH.
+
+## Frax in-House Validators
+Each validator's public address and real time stats can be monitored at: https://facts.frax.finance/frxeth/validators
+
+Third party & community tracking of all of frxETH's validators can be found at: https://www.rated.network/o/Frax?network=mainnet&timeWindow=1d

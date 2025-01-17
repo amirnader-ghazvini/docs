@@ -1,0 +1,29 @@
+---
+title: Frax Ether Redemption
+lang: en-US
+---
+
+# Redemption
+*Mechanism for converting frxETH to ETH 1-to-1 without fees or slippage*
+
+## Summary
+The Frax Ether Protocol allows for frxETH holders to redeem their tokens for ETH using the frxETH Redemption Queue Contract. Since frxETH is collateralized by ETH that are staked in validator nodes, these validators are then ejected to service 1-to-1 redemptions of frxETH for ETH through the redemption contract. Users who opt to redeem their frxETH rather than swap on secondary markets (such as AMMs like Curve) can at any time send their frxETH to the redemption contract for a redemption NFT. This NFT reserves their place in the queue and shows their redemption duration through a timestamp. Once the timestamp is reached, the NFT holder can call a function to swap their NFT for the exact amount of ETH as their redeemed frxETH (without fees or slippage). The redemption process is meant to safeguard against frontrunning, MEV, and other arbtriage externalities by guaranteeing users who have redeemed (ie: who hold the redemption NFT) their fair spot in the queue line.
+
+## frxETH Redemption Queue
+The frxETH redemption queue is a specific waiting time system that redeemers must wait through to receive ETH for their frxETH. The frxETH redemption queue waiting time is calculated as: ```posEntryQueue+posExitQueue+deltaFactor```. This means that the time required to wait to receive ETH is the total time of both entry and exit queue at the time of initiation and an additional amount set by governance so that node operators have a small amount of time to make preparations to eject.
+
+The queue is the sum duration of the Ethereum proof of stake entry and exit queues due to the fact that users staking sfrxETH do not bear any cost of waiting (unlike ETH stakers who must wait the entry queue). Therefore, if the Frax Ether system has no entry queue on receiving staking income, then the entry queue must be accounted for on exit by redeemers. Redeemers must wait the sum total of both entry and exit queues in order to redeem their frxETH for ETH. Otherwise, the system could be vulnerable to griefing attacks where users enter into sfrxETH during periods of long entry queue times, then specifically redeem for ETH during times when the proof of stake exit queue is long. In order to avoid this attack vector, the frxETH redemption system forces redeemers to wait the summation of both queues and a delta factor.
+
+```FraxEtherRedemptionQueue```: ```0x82bA8da44Cd5261762e629dd5c605b17715727bd```
+
+<figure style={{ textAlign: 'center', marginTop: '20px' }}>
+  <img
+    src="/images/protocol/frxETH-Redemption-Black.png"
+    alt="Frax Ether"
+    style={{ display: 'block', margin: 'auto' }}
+  />
+  <figcaption style={{ marginTop: '10px', fontSize: '14px', color: '#555' }}>
+    Complete transaction flow through the frxETH redemption system.
+  </figcaption>
+</figure>
+

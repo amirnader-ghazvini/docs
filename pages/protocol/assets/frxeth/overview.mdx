@@ -1,0 +1,42 @@
+---
+title: Frax Ether Overview
+lang: en-US
+---
+
+# Overview
+*Frax's liquid ETH staking derivative*
+
+## Summary
+**Frax Ether** is a liquid ETH staking derivative and stablecoin system designed to uniquely leverage the Frax Finance ecosystem to maximize staking yield and smoothen the Ethereum staking process for a simplified, secure, and DeFi-native way to earn interest on ETH. In addition, frxETH is used as the [gas token](https://docs.frax.com/fraxtal/gas-fees/frxETH) on the Fraxtal L2 chain. Lastly, 8% of the income is retained as a fee for the benefit of the Frax Ecosystem and FXS holders. The balance sheet & peg of frxETH to ETH is independent of FRAX's $1 balance sheet & peg.
+
+The Frax Ether system comprises three primary components, Frax Ether (frxETH), Staked Frax Ether (sfrxETH), and the Frax ETH Minter:
+
+1. **frxETH** acts as a stablecoin loosely pegged to ETH, leveraging Frax's winning playbook on stablecoins and onboarding ETH into the Frax ecosystem. The frxETH peg is defined as 1% of the exchange rate on each side 1.01 to .9900.
+
+2. **sfrxETH** is the version of frxETH which accrues staking yield. All profit generated from Frax Ether validators is distributed to sfrxETH holders. By exchanging frxETH for sfrxETH, one becomes eligible for staking yield, which is redeemed upon converting sfrxETH back to frxETH.
+
+3. **Frax ETH Minter** (```frxETHMinter```) allows the exchange of ETH for frxETH, bringing ETH into the Frax ecosystem, spinning up new validator nodes when able, and minting new frxETH equal to the amount of ETH sent.
+
+## Liquid Staking
+Solo ETH staking requires the technical knowledge and initial setup associated with running a validator node, and also that deposits be made 32 ETH at a time. By opting to use a liquid ETH staking derivative instead of staking ETH in another form, staking yield can be accrued much more simply, abstracting the need to run validators, allowing yield to be earned on any amount of ETH, allowing withdrawals at any time and of any size, and allowing far greater composability throughout DeFi.
+
+## Income Distribution
+Per [FIP-122](https://gov.frax.finance/t/fip-122-frxeth-protocol-fee-structure/1894), the ETH staking income is distributed as follows:
+
+- **sfrxETH Rewards [90%]**: Rewarded to sfrxETH vault stakers in the form of frxETH. This generates sfrxETH APY.
+
+- **Protocol fee [8%]**: Sent to Frax ecosystem contracts (like AMOs) for the eventual benefit of FXS holders and FRAX peg backing.
+
+- **Insurance fund [2%]**: Covers potential slashing events/unforeseen penalties. Backs frxETH deposits to effectively keep frxETH overcollateralized at over 100% CR to cover any possible issues/losses.
+
+## Flowchart
+<figure style={{ textAlign: 'center', marginTop: '20px' }}>
+  <img
+    src="/images/protocol/frxeth-flowchart.svg"
+    alt="Frax Ether"
+    style={{ display: 'block', margin: 'auto' }}
+  />
+  <figcaption style={{ marginTop: '10px', fontSize: '14px', color: '#555' }}>
+    Frax Ether Flowchart
+  </figcaption>
+</figure>

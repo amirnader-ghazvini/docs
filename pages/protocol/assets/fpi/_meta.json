@@ -1,6 +1,6 @@
 {
-  "overviw": "Overview",
-  "cpi": "CPI Tracker Oracle",
+  "overview": "Overview",
+  "cpi": "CPI Oracle",
   "controller_pool":"FPI Controller Pool",
-  "fpis":"FPIS"
+  "fpis":"FPIS (Phased out)"
 }

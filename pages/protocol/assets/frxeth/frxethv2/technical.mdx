@@ -1,0 +1,101 @@
+---
+title: Frax Ether V2 Technical
+lang: en-US
+---
+
+# frxETH V2 Technical Details
+*Smart contract and other details*
+
+## Overview Flowchart
+<figure style={{ textAlign: 'center', marginTop: '20px' }}>
+  <img
+    src="/images/protocol/frax-ether-v2-flowchart.svg"
+    alt="frxETH V2 Flowchart"
+    style={{ display: 'block', margin: 'auto' }}
+  />
+  <figcaption style={{ marginTop: '10px', fontSize: '14px', color: '#555' }}>
+    frxETH V2 Flowchart
+  </figcaption>
+</figure>
+
+## Beacon Oracle
+Validators are monitored, and their exit messages stored, offchain. The Beacon Oracle service/bot will trigger validator exits if borrow positions become unhealthy and/or validators get slashed. It also monitors ValidatorPool deposits, repays, withdrawals, etc and calculates how much borrow credit said pools should have.
+
+## Curve AMO
+Unused ETH can wind up here and be invested into various Convex farms to earn yield passively. When the ETH is needed again, either for borrowing or for frxETH -> ETH redemptions, the farming LP can be unwound back into ETH and sent away. Operated by the Protocol.
+
+## Ether Router
+Serves as a "middleman" contract for ETH flows. ETH from frxETH minting goes here. When ETH is needed for borrowing, it is sent to a ValidatorPool via the LendingPool. When ETH is needed for redemptions, it is sent to the RedemptionQueue. Unused ETH can temporarily be invested in the Curve AMO to earn yield, then be unwound when it is needed again. Profits from ValidatorPool interest payments also collect here.
+
+### Key Functions
+```getConsolidatedEthFrxEthBalance```: Looks in various places for ETH and frxETH/sfrxETH in various forms, either free or in LPs. This information is primarily used for utilization calculations.
+
+```requestEther```: LendingPool calls this when someone borrows, and RedemptionQueue when someone is redeeming. The function first looks for idle ETH in the EtherRouter, then idle ETH in Curve AMOs, then LP'd ETH in the CurveAMOs.
+
+```sweepEther```: Operator can periodically sweep idle accumulated ETH into the Curve AMO and subsequent LPs so it can passively earn yield. These LP operations are gassy and hence, this operation is bot-called vs called whenever a normal user interacts (borrow/repay/mint frxETH/etc).
+
+## FraxEtherMinter
+Takes ETH and mints frxETH. The collected ETH flows to the Ether Router to be used for lending, passive income, or frxETH redemption requests.
+
+### Key Functions
+```mintFrxEth``` / ```mintFrxEthAndGive```: Takes in ETH and gives frxETH to the sender or the specified recipient.
+
+```submitAndDeposit```: Takes in ETH, converts it to frxETH, then deposits that to generate sfrxETH. Generated sfrxETH sent to the specified recipient.
+
+## Lending Pool
+ValidatorPool partial deposits, borrows, liquidations, and repays go through here. BeaconOracle sets credit/allowances, validator count, etc.
+
+### Key Functions
+```addInterest``` / ```addInterestPrivileged```: Manually accrue interest. Called inline in many other functions.
+
+```currentRateInfo```: Gets the interest ```ratePerSec``` and ```fullUtilizationRate```, which can be used to calculate the borrow APR as follows:
+
+<figure style={{ textAlign: 'center', marginTop: '20px' }}>
+  $BorrowAPR \enspace =ratePerSec \times oneYearInSecs \times 100$
+</figure>
+
+
+```getUtilization```: Gets the current utilization of the ETH in the system.
+
+```setValidatorApprovals```: Beacon Oracle bot approves validators for given validator pools.
+
+```setVPoolCreditsPerValidator```: Beacon Oracle bot sets the number of credits a validator pool would get per validator deposited.
+
+```setVPoolValidatorCountsAndBorrowAllowances```: Beacon Oracle bot adjusts validator count and borrow allowances for given validator pools
+
+```wouldBeSolvent```: Used to test if adding validators and/or a borrow amount to a given validator pool would make it insolvent.
+
+## RedemptionQueue
+Users deposit their frxETH and, after a waiting period (varies depending on average Beacon Chain exit queue length), can collect ETH 1:1. After they deposit, they receive a redemption "ticket" NFT that is freely transferable. Their time of entry is marked in the NFT so earlier redeemers have preference over later redeemers if there is an ETH shortage (first come, first served). Due to this change, users will NOT have the option to exit the NFT early for a penalty as they could do in frxETH V1. After the wait, they can burn the redemption ticket NFT and receive back ETH 1:1 to frxETH.
+
+### Key Functions
+```canRedeem```: Whether a FrxETHRedemptionTicket NFT and a specified amount of ETH can be redeemed. Depends if the NFT reached maturity and if ETH is available, partially or fully. If there is an ETH shortage, earlier NFTs will have redemption preference over later NFTs, even if both are time-eligible for redemption.
+
+```ethShortageOrSurplus```: Information as to whether the Redemption Queue has enough ETH to service all outstanding redemption tickets.
+
+```enterRedemptionQueue``` / ```enterRedemptionQueueWithPermit``` / ```enterRedemptionQueueWithSfrxEthPermit``` / ```enterRedemptionQueueViaSfrxEth```: Enter the Redemption Queue with either frxETH or sfrxETH, with/without ```permit```. Will receive a FrxETHRedemptionTicket NFT after completion.
+
+```fullRedeemNft``` / ```partialRedeemNft```: Fully / Partially redeem a FrxETHRedemptionTicket NFT for ETH. NFT must have reached maturity. Will revert if there is not enough ETH, or there is, but it is earmarked for earlier NFTs.
+
+## Validator Pool
+Users will need to be able to manage their ValidatorPool (VP). VP contracts are factory generated by the LendingPool contract and deployed by the user. Users deposit their own ETH in the VP, along with the public keys, signatures, and deposit data roots for their validators. All ETH2 staking rewards and exited ETH get sent back to the VP address. MEV can technically go elsewhere (we can't control that). Escrowed exit messages serve as the "collateral" for the system; the exited ETH returns to the VP and is trapped there until all outstanding loans are paid.
+
+### Key Functions
+```deposit```: Payable function that takes the validator public key, signature, deposit data roots, and msg.value ETH, and deposits it into the ETH2 deposit contract. Integer multiples of 1 ETH between 1 ETH and 32 ETH. If they deposit less than 32 ETH and have the allowance for it, they can borrow the remainder to complete the 32 ETH validator deposit. Users will also have to independently submit the secret exit message to an API endpoint for safe storage before they can receive borrow credit. After reciept, BeaconOracle bot will grant the VP borrowing credit.
+
+```requestFinalDeposit```: Completes a 32 ETH deposit to spin up a validator, borrowing any remainder from the protocol in order to do so. For anonymous validators, 24 ETH of borrowing credit is given per 32 ETH deposited. There is an ability in the future for qualified and vetted projects to have more credit, perhaps as high as 31 ETH per 32 ETH deposited. This credit/allowance tracked off-chain to make sure the validator is legitimate, the exit message is escrowed, and the user is otherwise healthy. A bot (BeaconOracle) then periodically updates the allowance amounts on-chain.
+
+A special case for the 1st deposit for a given validator pool requires only 8 ETH by the user, with the rest being supplied by the protocol. This is safe for the protocol because the escrowed exit message is still required and if the validator is slashed, there is 8 ETH of buffer before the protocol itself takes a loss.
+
+```borrow```: If the validator pool has the allowance, borrows ETH from the LendingPool, which can then be used for spinning up more validators if desired.
+
+```repayWithValue```: Payable function that repays the msg.value amount of ETH for the validator pool's loan. Use's sender's ETH. Callable only by the VP owner or the LendingPool (in the case of a liquidation)
+
+```repayAmount```: Repays the specified amount of ETH for the validator pool's loan. Uses the validator pool's own ETH. Callable only by the VP owner or the LendingPool (in the case of a liquidation).
+
+```repayShares```: Same as ```repayAmount``` but uses lending shares instead.
+
+```withdraw```: Withdraw specified amount of ETH from the ValidatorPool to the intended recipient. Must pay ALL outstanding loans first. Will be unable to reuse the ValidatorPool contract until the BeaconOracle bot catches up and registers the withdrawal.
+
+## VariableInterestRate
+Interest rate math for the ETH borrowing in the LendingPool. Uses same rationale / logic as Fraxlend's [Variable Interest Rate](https://docs.frax.finance/fraxlend/advanced-concepts/interest-rates).
