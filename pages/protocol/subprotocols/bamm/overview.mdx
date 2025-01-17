@@ -1,7 +1,52 @@
 ---
-title: BAMM
+title: BAMM Overview
 lang: en-US
 ---
+*Legacy version of Frax Protocol docs are currently available on [docs.frax.finance](https://docs.frax.finance)*
+# BAMM Overview
+*Borrow-AMM (BAMM)*
 
-## BAMM
+## Summary
+The BAMM is a borrowing/lending module built on top of Fraxswap. Unlike other borrowing lending modules, the BAMM does not need an outside oracle or external liquidity to function safely. This is because the needed liquidity is provided by the lenders. With the BAMM we can create borrowing lending services for pairs that were previously impossible, because they did not have a solid oracles or sufficient liquidity. Borrowers rent liquidity provided by lenders to automatically leverage up and down, such that they can stay solvent even in the case of high volatility. This means borrowers can not experience sudden liquidations, so there is also no need to pay high liquidation fees to liquidators, creating a better deal for both borrowers and lenders. Each BAMM pool is build on top of a single Fraxswap pool that holds two tokens. Borrowers can safely long and short each token without fear of sudden liquidation.
+
+<figure style={{ textAlign: 'center', marginTop: '20px' }}>
+  <img
+    src="/images/protocol/BAMM-Black.png"
+    alt="Frax Ether"
+    style={{ display: 'block', margin: 'auto' }}
+  />
+  <figcaption style={{ marginTop: '10px', fontSize: '14px', color: '#555' }}>
+    Chart - 1 : BAMM Protocol Action Flow
+  </figcaption>
+</figure>
+
+### Lenders
+
+Lenders lend their full range liquidity LP tokens from Fraxswap to the BAMM lending pool. The amount lend is calculated used the following formula: sqrt(X×Y). Where X and Y are the number of the two tokens in the pool. Lenders earn trading fees from Fraxswap and interest rate from borrowers that rent their liquidity.
+
+<figure style={{ textAlign: 'center', marginTop: '20px' }}>
+  <img
+    src="/images/protocol/BAMM-Lenders-Black.png"
+    alt="Frax Ether"
+    style={{ display: 'block', margin: 'auto' }}
+  />
+  <figcaption style={{ marginTop: '10px', fontSize: '14px', color: '#555' }}>
+    Chart - 2 : BAMM Protocol Lenders Action Flow
+  </figcaption>
+</figure>
+
+### Borrowers
+
+Each borrower has its own vault where they put in their collateral, rent liquidity from the liquidity pool and withdraw tokens. Rented liquidity LP tokens are burned when rented and the underlying tokens are put in the users vault to act as collateral. The user can also withdraw tokens from their vault, but they must remain solvent. A user is solvent when the rented liquidity amount is less than 98% of the sqrt(X×Y) of their vault. Note that for both the amount of the rented LP and the assets in the vault, the sqrt(X×Y) is used to calculate solvency. These values are unchanged when there are price movements, so the borrower can not get insolvent when prices change. The borrowers debt slowly increases over time due to interest rate payments, so borrowers should periodically check their position to avoid liquidation. The interest rate for the rented liquidity is calculated using a dynamic interest rate model that is used in Fraxlend as well.
+
+<figure style={{ textAlign: 'center', marginTop: '20px' }}>
+  <img
+    src="/images/protocol/BAMM-Borrower-Black.png"
+    alt="Frax Ether"
+    style={{ display: 'block', margin: 'auto' }}
+  />
+  <figcaption style={{ marginTop: '10px', fontSize: '14px', color: '#555' }}>
+    Chart - 3 : BAMM Protocol Borrowers Action Flow
+  </figcaption>
+</figure>
 

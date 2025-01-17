@@ -64,3 +64,10 @@ export const fxbAddresses = {
   FXB2029Oracle: { L1: 'N/A', L2: 'N/A' },
   FXB2055Oracle: { L1: 'N/A', L2: 'N/A' },
 };
+export const bammAddresses = {
+  Factory: { L1: 'N/A', L2: 'N/A' },
+  Comptroller: { L1: 'N/A', L2: 'N/A' },
+  AMO: { L1: 'N/A', L2: 'N/A' },
+  AMOOperator: { L1: 'N/A', L2: 'N/A' },
+  AMOTimelock: { L1: 'N/A', L2: 'N/A' },
+}
