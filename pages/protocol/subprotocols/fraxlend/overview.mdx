@@ -1,0 +1,58 @@
+---
+title: Fraxlend Overview
+lang: en-US
+---
+*Legacy version of Frax Protocol docs are currently available on [docs.frax.finance](https://docs.frax.finance)*
+# Fraxlend Overview
+*An isolated pair lending protocol*
+
+## Summary & Motivation
+Fraxlend is a lending platform that provides lending markets between a pair of ERC-20 assets.  Each pair is an isolated market which allows anyone to participate in lending and borrowing activities. Lenders are able to deposit ERC-20 assets into the pair and receive yield-bearing fTokens. As interest is earned, fTokens can be redeemed for ever-increasing amounts of the underlying asset.
+
+The main purpose for the creation of Fraxlend was for usage by the Fraxlend AMO. The AMO contract supplies protocol-owned FRAX (and other Frax ecosystem tokens like frxETH and sfrxETH) for other users to borrow, in exchange for those borrowers depositing various collateral tokens and paying interest. This both generates income for the protocol and diversifies the collateral backing FRAX.
+
+The max [loan-to-value (LTV)](https://www.investopedia.com/terms/l/loantovalue.asp) for each pair can voted on by the community, but generally is around 75% for pairs with volatile tokens and 90% for stablecoin/stablecoin pairs (the latter is generally less risky). The protocol also maintains a liquidation bot, but liquidations can be performed by any user against any unhealthly/underwater position.
+
+Fraxlend UI: [Link](https://app.frax.finance/fraxlend/available-pairs)
+
+Public Repo: https://github.com/FraxFinance/fraxlend
+
+
+<img
+  src="/images/protocol/fraxlend_black.png"
+  alt="Fraxlend icon"
+  width="200"
+  style={{ display: 'block', margin: 'auto', marginTop: '20px' }}
+/>
+
+## Ecosystem Participants
+
+<figure style={{ textAlign: 'center', marginTop: '20px' }}>
+  <img
+    src="/images/protocol/fraxlend-flowchart-black.png"
+    alt="Fraxlend"
+    style={{ display: 'block', margin: 'auto' }}
+  />
+  <figcaption style={{ marginTop: '10px', fontSize: '14px', color: '#555' }}>
+    Fraxlend Flowchart
+  </figcaption>
+</figure>
+
+The primary participants in Fraxlend are **Lenders** and **Borrowers**, these participants interact with individual Pairs.
+
+* Lenders provide Asset Tokens to the pair in exchange for fTokens
+
+* Borrowers provide Collateral Tokens to the pair and in exchange receive Asset Tokens. Borrowing incurs an interest rate which is capitalized and paid to lenders upon redemption of fTokens.
+
+Beyond **Pairs**, the rest of the ecosystem includes: **Oracles**, **Rate Calculators**, and the **Fraxlend Pair Deployer**
+
+* Each pair relies on an **Oracle** to determine the market rate for both the Asset Token and the Collateral Token.  Oracles combine price feeds from multiple places to achieve a robust and manipulation resistant price feed.
+
+* Each pair is deployed with a **Rate Calculator**. These contracts calculate the interest rate based on the amount of available capital to borrow. Typically less borrowing will lead to lower rates, with more borrowing leading to higher rates.
+
+* Each pair is deployed by a **Deployer** contract
+
+* The pair **Registry** keeps track of all Fraxlend Pairs deployed
+
+
+

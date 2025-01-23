@@ -1,9 +1,8 @@
 {
-  "index": {
-    "display": "children",
-    "title": "Frax Protocol",
-    "theme": {
-      "sidebar": false
-    }
-  }
+  "index": "Overview",
+  "assets": "Assets",
+  "subprotocols": "Subprotocols",
+  "crosschain": "Crosschain Strategy",
+  "security": "Security",
+  "integration": "Integration"
 }

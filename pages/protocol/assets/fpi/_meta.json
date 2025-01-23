@@ -1,0 +1,7 @@
+{
+  "overview": "Overview",
+  "cpi": "CPI Oracle",
+  "controller_pool":"FPI Controller Pool",
+  "fpis":{"title":"FPIS (Phased out)", "display": "hidden"},
+  "addresses": "Addresses"
+}

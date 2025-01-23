@@ -1,0 +1,31 @@
+---
+title: Frax USD Stablecoin
+lang: en-US
+---
+
+# The Frax USD Stablecoin
+## Overview
+**Frax USD (frxUSD)** is a fiat-redeemable, fully-collateralized stablecoin issued by the Frax Finance Protocol. Frax USD uses a hybrid model that allows for governance-approved enshrined custodians to mint/redeem the stablecoin by holding cash-equivalent reserves while also having onchain mechanisms built by the Frax Finance Protocol.
+
+<img
+  src="/images/protocol/frxUSD.png"
+  alt="frxUSD Logo"
+  width="200"
+  style={{ display: 'block', margin: 'auto', marginTop: '20px' }}
+/>
+
+## Enshrined Custodians
+
+**An enshrined custodian** is a real-world entity that can mint and burn **frxUSD** 1-to-1 in exchange for \$1.00 of cash-equivalent reserves that they custody. This means that an enshrined custodian can mint 1 frxUSD for \$1.00 of provable reserves they hold and release \$1.00 of reserve they custody when they burn 1 frxUSD. <br />
+
+**Real-world entities** can be added as an enshrined custodian through **governance** along with a custodian cap which signifies the maximum amount of frxUSD they can mint for holding reserves. A ```frxUSDCustodian``` contract is deployed through a governance process signifying the allotted minting cap and a token representing the asset they custody (ie: Blackrock BUIDL). <br />
+Any user is able to interact with any ```frxUSDCustodian``` contract; however, the underlying reserve token itself might have further requirements such as whitelists. This allows the frxUSD stablecoin to function in a permissionless manner while allowing real-world entities & institutions to onboard frxUSD while complying with their own internal requirements. frxUSD is redeemable for any custodian asset on demand meaning that there is no guarantee that frxUSD is redeemable for a particular asset or from a particular enshrined custodian.
+
+For example, if Blackrock BUIDL and Superstate USTB are enshrined custodian assets, there is no guarantee that frxUSD is always redeemable for both BUIDL and USTB if all supply of BUIDL is redeemed against from the Blackrock ```frxUSDCustodian``` contract (or vice versa). As long as ```frxUSDCustodian``` contracts have collateral tokens within them, frxUSD is redeemable on demand from them.
+
+### Added Custodians
+| Entity Name | Asset | Governance Proposal |
+| :---------- | :---- | :------------------ |
+| Securitize Markets, LLC | BUIDL  |  [FIP - 418](https://gov.frax.finance/t/fip-418-buidl-as-a-backing-asset-for-frax-usd/3533) |
+| Superstate Inc. | USCC | [FIP - 420](https://gov.frax.finance/t/fip-420-uscc-as-collateral-and-custodian-asset-for-frxusd/3540) |
+| Superstate Inc. | USTB | [FIP - 421](https://gov.frax.finance/t/fip-421-ustb-as-collateral-and-custodian-asset-for-frxusd/3539) |

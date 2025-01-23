@@ -35,3 +35,53 @@ export const fraxTokenAddresses = {
   sfrxETH: { L1: '0xac3E018457B222d93114458476f3E3416Abbe38F', L2: '0xfc00000000000000000000000000000000000005' },
   wfrxETH: { L1: 'N/A', L2: '0xfc00000000000000000000000000000000000006' },
 };
+
+export const fxbAddresses = {
+  FXBFactory: { L1: '0xa8478781D9605E17c3b4c9C79e7127c4597116E4', L2: '0xaFa1705021f65418e746D8664f4B8A58271f6De4' },
+  AuctionFactory: { L1: '0xc9268c7F59850B26567b0f5d3Dcc317cEDC43490', L2: '0x2606C2BbE377EDa9e38FFf300D422Ca7cCAB1e5d' },
+  AMO: { L1: '0x452420df4AC1e3db5429b5FD629f3047482C543C', L2: '0xE6ed07952dC9993DD52c6d991Fa809C00eBE58a3' },
+  AMOOperator: { L1: '0x831822660572bd54ebaa065C2acef662a6277D40', L2: '0x5f25218ed9474b721d6a38c115107428E832fA2E' },
+  AMOTimelock: { L1: '0x831822660572bd54ebaa065C2acef662a6277D40', L2: '0xC4EB45d80DC1F079045E75D5d55de8eD1c1090E6' },
+
+  FXB2024: { L1: '0xF8FDe8A259A3698902C88bdB1E13Ff28Cd7f6F09', L2: '0xa71bB8c79dc8FfA90A6Dd711aA9Fbe5114c19cba' },
+  FXB2025: { L1: 'N/A', L2: '0xacA9A33698cF96413A40A4eB9E87906ff40fC6CA' },
+  FXB2026: { L1: '0x76237BCfDbe8e06FB774663add96216961df4ff3', L2: '0x8e9C334afc76106F08E0383907F4Fca9bB10BA3e' },
+  FXB2027: { L1: 'N/A', L2: 'N/A' },
+  FXB2029: { L1: 'N/A', L2: '0xF1e2b576aF4C6a7eE966b14C810b772391e92153' },
+  FXB2055: { L1: 'N/A', L2: '0xc38173D34afaEA88Bc482813B3CD267bc8A1EA83' },
+
+  FXB2024Auction: { L1: 'N/A', L2: '0x36b3b471c7486Eb9583759681404c48d3c8CC813' },
+  FXB2025Auction: { L1: 'N/A', L2: '0x6e6B61369A4f549FF3A7c9E0CFA5F7E8Ada5CD22' },
+  FXB2026Auction: { L1: 'N/A', L2: '0x334f19B2B6ab1B16eC65A7138dCEe22B60E1A60c' },
+  FXB2027Auction: { L1: 'N/A', L2: 'N/A' },
+  FXB2029Auction: { L1: 'N/A', L2: '0xb29002BF776066BF8d73B3F0597cA8B894E30050' },
+  FXB2055Auction: { L1: 'N/A', L2: '0xfC9f079e9D7Fa6080f61F8541870580Ee7af7CF2' },
+
+  FXB2024Oracle: { L1: '0x08a0748cF885F46e20fA30A50a035808eab293D3', L2: 'N/A' },
+  FXB2025Oracle: { L1: 'N/A', L2: 'N/A' },
+  FXB2026Oracle: { L1: '0x2ec5D1C13fEF1C7029eE329a1D31B2180c9b3707', L2: 'N/A' },
+  FXB2027Oracle: { L1: 'N/A', L2: 'N/A' },
+  FXB2029Oracle: { L1: 'N/A', L2: 'N/A' },
+  FXB2055Oracle: { L1: 'N/A', L2: 'N/A' },
+};
+export const bammAddresses = {
+  Factory: { L1: 'N/A', L2: 'N/A' },
+  Comptroller: { L1: 'N/A', L2: 'N/A' },
+  AMO: { L1: 'N/A', L2: 'N/A' },
+  AMOOperator: { L1: 'N/A', L2: 'N/A' },
+  AMOTimelock: { L1: 'N/A', L2: 'N/A' },
+}
+export const fraxlendAddresses = {
+  Factory: { L1: 'N/A', L2: 'N/A' },
+  Comptroller: { L1: 'N/A', L2: 'N/A' }
+}
+
+export const frxUsdAddresses = {
+  Token: { Ethereum: '0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29', Fraxtal: '0xfc00000000000000000000000000000000000001' },
+  Comptroller: { Ethereum: 'N/A', Fraxtal: 'N/A' }
+}
+
+export const sfrxUsdAddresses = {
+  Token: { Ethereum: '0xcf62F905562626CfcDD2261162a51fd02Fc9c5b6', Fraxtal: '0xfc00000000000000000000000000000000000008' },
+  Comptroller: { Ethereum: 'N/A', Fraxtal: 'N/A' }
+}

@@ -1,0 +1,34 @@
+---
+title: CPI Oracle
+lang: en-US
+---
+# CPI Tracker Oracle
+## Description
+The oracle uses Chainlink's December 2021 CPI-U data point (provided by Fiews) as the 'base' index for determining the peg price. Each month, the change / delta percent of the index is applied to the previous month's data point to determine the peg price. December 2021 was chosen because the oracle contract requires two initial 'historical' data points.
+
+**Example:**
+
+December 2021 CPI-U: 280.126
+
+January 2022 CPI-U: 281.933
+
+Delta is (281.933 / 280.126) - 1 = 0.64506686%
+
+Assuming December 2021 is \$1, applying the delta percentage gives
+
+\$1 x (1.0064506686) = \$1.0064506686 as the peg price.
+
+If February 2022 CPI-U data was 284.182, the delta would be (284.182 / 281.933) - 1 = 0.79770726%.
+
+Applying this to the previous peg price would give \$1.0064506686 * (1 + 0.0079770726) = \$1.0144791987 as the new peg price. In other words, you would need this many Feb 2022 dollars to buy one Dec 2021 dollar.
+
+```CPITrackerOracle (V2)``` : ```0x66B7DFF2Ac66dc4d6FBB3Db1CB627BBb01fF3146```
+
+Raw data source: https://data.bls.gov/timeseries/CUSR0000SA0
+
+Chainlink / Fiews Oracle: https://etherscan.io/address/0x049Bd8C3adC3fE7d3Fc2a44541d955A537c2A484
+
+ https://market.link/jobs/44964ac4-d302-4141-8f94-67e58e34b88d
+
+## Code
+- [```CPITrackerOracle.sol```](https://github.com/FraxFinance/frax-solidity/blob/master/src/hardhat/contracts/Oracle/CPITrackerOracle.sol)

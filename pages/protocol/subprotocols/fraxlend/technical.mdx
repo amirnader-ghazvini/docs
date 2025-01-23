@@ -1,0 +1,213 @@
+---
+title: Fraxlend Technical Details
+lang: en-US
+---
+*Legacy version of Frax Protocol docs are currently available on [docs.frax.finance](https://docs.frax.finance)*
+# Fraxlend Technical Details
+
+## Key Concepts
+### Pairs
+Each pair is an isolated market to borrow a single ERC-20 token (known as the Asset Token) by depositing a different ERC-20 token (known as the Collateral Token).
+
+When Lenders deposit Asset Tokens into the Pair, they receive fTokens.  fTokens are ERC-20 tokens and are redeemable for Asset Tokens (sometimes referred to as the underlying asset).  As interest is accrued, fTokens are redeemable for increasing amounts of the underlying asset.
+
+Borrowers deposit Collateral Tokens into the Pair and in exchange receive the right to borrow Asset Tokens
+
+### Loan-To-Value
+Each borrower's position has a Loan-To-Value (LTV).  This represents the ratio between the value of the assets borrowed and the value of the collateral deposited.  The LTV changes when the exchange rate between Asset and Collateral Tokens move or when interest is capitalized.
+
+If a borrower's LTV rises above the Maximum LTV, their position is considered unhealthy.  In order to remediate this, a borrower can add collateral or repay debt in order to move the LTV back into a healthy range.
+
+The Maximum LTV value is immutable and configured at deployment.  Typically the value is set to 75%.  Custom Term Sheet deployments can set this value manually, even creating under-collateralized loans by setting the value above 100%.  Maximum LTV configured above 100% must be accompanied by a borrower whitelist to protect against malicious actors.  The configured value can be found by calling the maxLTV() function on the pair.
+
+### Rate Calculator
+Each pair is configured to use a specific Rate Calculator contract to determine interest rates.  At launch, Fraxlend supports two types of Rate Calculators.
+
+- **Time-Weighted Variable Rate Calculator** - allows the interest rate to change based on the amount of assets borrowed, known as the utilization.  When utilization is below the target, interest rates will adjust downward, when utilization is above the target, interest rates will adjust upward.  For more information see Advanced Concepts: [Time-Weighted Variable Interest Rate](https://docs.frax.finance/fraxlend/advanced-concepts/interest-rates#time-weighted-variable-interest-rate)
+
+- **Linear Rate Calculator** - calculates the interest rate purely as a function of utilization.  Lower utilization results in lower borrowing rate, while higher utilization results in higher borrowing rates.  For more information see Advanced Concepts: [Linear Rate](https://docs.frax.finance/fraxlend/advanced-concepts/interest-rates#linear-rate)
+
+- **Variable Rate V2** - calculates the interest rate as a function of utilization.  The interest rate responds immediately to changes in utilization along a rate function f(Utilization) = rate.  However, the slope of the function increases when utilization is above the target and decreases when utilization is below the target.  This means that rates will respond instantly to changes in utilization.  Extended periods of low or high utilization will change the shape of the rate curve.  For more information see Advanced Concepts: [Variable Rate V2](https://docs.frax.finance/fraxlend/advanced-concepts/interest-rates#variable-rate-v2-interest-rate)
+
+### Liquidations
+When a borrowers LTV rises above the Maximum LTV, any user can repay all or a portion of the debt on the borrower's behalf and receive an equal value of collateral plus a liquidation fee. The liquidation fee is immutable and defined at deployment.  By default the value is set to 10% and can be accessed by calling the ```liquidationFee()``` view function on the pair.
+
+### fToken Share Price
+When lenders deposit Asset Tokens they receive fTokens at the current fToken Share Price.  fTokens represent a lender's share of the total amount of underlying assets deposited in the pair, plus the capitalized interest from borrowers.  As interest accrues, the Share Price increases. Upon redemption, the fTokens are redeemable for an ever-increasing amount of Asset Tokens which includes capitalized interest.  To check the current fToken Share Price, call the ```totalAsset()``` view function and compare the value of amount/shares.
+
+### Vault Account
+The Vault Account is core concept to all accounting in the Pair.  A Vault Account is a struct which contains two values:
+
+1. The total **Amount** of tokens in the Vault Account.
+
+2. the total number of **Shares** in the Vault Account.
+
+```solidity
+struct VaultAccount {
+    // Represents the total amount of tokens in the vault
+    uint128 amount; // Analogous to market capitalization
+
+    // Represents the total number of shares or claims to the vault
+    uint128 shares; // Analogous to shares outstanding
+}
+```
+The Shares represent the total number of claims to the amount.  Shares can be redeemed for Asset Tokens.  The rate of redemption, known as the **Share Price** is determined by dividing the Amount value by the Shares value.  It is essentially the exchange rate between Shares and the underlying Asset Token.
+
+To convert between a value represented as an Amount into the corresponding Shares, divide the Amount by the Share Price.  To convert from Shares to Amount, multiply by Share Price.
+
+Shares = Amount / Share Price
+Amount = Shares x Share Price
+
+
+## Lending
+Lenders deposit Asset Tokens into the Pair and in return receive the corresponding number of Asset Shares (fTokens) depending on the current Share Price.
+
+At any time a Lender can exchange their fTokens for the underlying Asset Tokens at the rate given by the current price.  The fToken Share Price increases as more interest is accrued.
+
+Accruing interest is the only operation which can change the Share Price.  Because interest accrual is always positive, the number of Asset Tokens that each fToken is redeemable for cannot decrease.
+
+### A Lending Example
+Alice has deposited 100 FRAX tokens to be lent out to borrowers, the initial fToken Share Price was 1.00 and she received 100 fTokens.  Since her initial deposit, the pair has earned 10 FRAX of interest.  So the Amount shows 110 (100 deposited FRAX + 10 FRAX earned as interest).  The current fToken Share Price is 1.10 (110 FRAX / 100 fTokens)
+
+| Asset Vault Account         | Total        |
+| :-------------------------- | :----------- |
+| Amount                      |  110         |
+| Shares                      |  100         |
+| Alice Share Balance (fToken)|  100         |
+| Bob Share Balance (fToken)  |  0           |
+
+If Bob now deposits 100 FRAX for lending we would see the following changes.  First the Amount in the pair will increase by 100.  The current Share Price for fTokens is 1.10.  Therefore Bob will receive 90.91 (100 / 1.10) fTokens for his deposit.  The Asset Vault Account now looks like this:
+
+| Asset Vault Account         | Total        |
+| :-------------------------- | :----------- |
+| Amount                      |  210         |
+| Shares                      |  190.91         |
+| Alice Share Balance (fToken)|  100         |
+| Bob Share Balance (fToken)  |  90.91           |
+
+As interest accrues, the Amount increases.  If an additional 20 FRAX are accrued as interest the Asset Vault Account looks like this:
+
+| Asset Vault Account         | Total        |
+| :-------------------------- | :----------- |
+| Amount                      |  230         |
+| Shares                      |  190.91         |
+| Alice Share Balance (fToken)|  100         |
+| Bob Share Balance (fToken)  |  90.91           |
+
+The Share Price has now increased to 1.2048 (230 FRAX / 190.91 fToken).  This means that Bob can redeem his 90.91 fTokens for 109.52 FRAX.  Likewise, Alice can redeem her 100 fTokens for 120.48 FRAX.
+
+Over time, as more interest accrues, Alice and Bob can redeem their fTokens for an ever-increasing amount of the underlying asset.
+
+## Borrowing
+Each pair gives the opportunity for users to borrow Asset Tokens, in return borrowers must supply the Pair with the appropriate amount of Collateral Tokens
+
+As long as borrowers have an open position, interest accrues and is capitalized.  This means that over time the amount a borrower owes increases by an amount equal to the interest they owe.  In order for a borrower to receive their collateral back, they must return the original loan amount plus all accrued interest.
+
+### A Borrowing Example
+Just like we used the Asset Vault Account to keep track of the total asset amounts and the corresponding number of shares, we use the Borrow Vault Account to keep track of the total amount borrowed, the capitalized interest, and the number of outstanding borrow shares.
+
+Suppose that Alice has borrowed 100 FRAX (\$100 of value) using \$150 worth of ETH.  Since her initial borrow she has accumulated 10 FRAX of interest.  The Borrow Vault Account would appear as follows:
+
+| Borrow Vault Account        | Total        |
+| :-------------------------- | :----------- |
+| Amount                      |  110 FRAX    |
+| Shares                      |  100         |
+| Alice Collateral Amount     |  $150 ETH    |
+| Alice Borrow Shares Balance |  100         |
+
+Remember that borrower's positions must remain below the Maximum Loan-To-Value (LTV).  Because Alice's LTV is 73.33% she is below the max value of 75% and her position is considered healthy.
+
+We calculate Alice's LTV in the following way.  First we calculate the value of her loan to be \$110 by multiplying her Borrow Share Balance (100 shares) by the Borrow Share Price (1.10), then multiply by the FRAX price given in USD (1.00). The value of her loan is \$100 (100x1.10x1.00). The value of her collateral is \$150.  This gives $110 / $150 = 73.33%
+
+Bob now borrows 100 FRAX, using $175 worth of ETH.  Given the current Borrow Share Price of 1.10, his Borrows Shares Balance would be approximately 90.91.  Unlike lenders, borrowers do not receive an ERC20 token representing their debt, instead the Share Balances are simply stored in the Pair.   Now the Borrow Vault Account looks like this:
+
+| Borrow Vault Account        | Total        |
+| :-------------------------- | :----------- |
+| Amount                      |  210 FRAX    |
+| Shares                      |  190.91      |
+| Alice Collateral Amount     |  $150 ETH    |
+| Alice Borrow Shares Balance |  100         |
+| Bob Collateral Amount       |  $175 ETH    |
+| Bob Borrow Shares Balance   |  90.91       |
+
+Suppose that the Pair accrues another 20 FRAX of interest.  The Borrow Vault Account now looks like this:
+
+| Borrow Vault Account        | Total        |
+| :-------------------------- | :----------- |
+| Amount                      |  230 FRAX    |
+| Shares                      |  190.91      |
+| Alice Collateral Amount     |  $150 ETH    |
+| Alice Borrow Shares Balance |  100         |
+| Bob Collateral Amount       |  $175 ETH    |
+| Bob Borrow Shares Balance   |  90.91       |
+
+
+The new Borrow Share Price is 1.2048 (230 / 190.91).  This means that in order for Alice to repay her debt she will need to repay 120.48 FRAX (Alice Shares (100) x Share Price (1.2048)).  Likewise, Bob would need to repay 109.52 FRAX (Bob Shares (90.91) x Share Price (1.2048)).
+
+As interest accrues the amount required to repay the loan increases and the LTV of each position changes.
+
+Alice's LTV: 80.32% (120.48 / 150)
+
+Bob's LTV: 62.58% (109.52 / 175)
+
+As the interest accrued and was capitalized, Alice's position has entered an unhealthy state as her LTV is above the Maximum LTV of 75%.  This puts her at high risk of having her position liquidated.
+
+## Position Health
+Each pair has a configured Maximum Loan-To-Value (LTV).  Over time, as interest is capitalized, borrowers must add more collateral or repay a portion of their debt.  Otherwise they risk having their position become unhealthy.  To determine a borrower’s LTV we use the value of the collateral and the value of the fTokens.
+
+<figure style={{ textAlign: 'center', marginTop: '20px' }}>
+  $LTV \enspace =  \frac{BorrowShares \times SharePrice}{CollateralBalance/ExchangeRate}$
+</figure>
+
+*Share Price is the price of 1 fToken in Asset Token Units (i.e. AssetToken:fToken ratio)*
+
+*Exchange Rate is the price of 1 Asset Token in Collateral Units (i.e. Collateral:Asset ratio)*
+
+## Liquidations
+When a borrowers LTV rises above the Maximum LTV, any user can repay the debt on the borrower's behalf and receive an equal value of collateral plus a liquidation fee. The liquidation fee is immutable and defined at deployment.  By default the value is set to 10% and can be accessed by calling the ```liquidationFee()``` view function on the pair. The configured Maximum LTV can be found by calling the ```maxLTV()``` function on the pair.
+
+## Dynamic Debt Restructuring
+Liquidators can close a borrower's position as soon as LTV exceeds the Maximum LTV (typically 75%).  However, in cases of extreme volatility, it is possible that liquidators cannot close the unhealthy position before the LTV exceeds 100%.  In this unlikely scenario bad debt is accumulated.  In this case, the liquidator repays the maximum amount of the borrower's position covered by the borrower's collateral and the remaining debt is reduced from the total claims that all lenders have on underlying capital.  This prevents the situation wherein lenders rush to withdraw liquidity, leaving the last lender holding worthless fTokens (commonly known as "bad debt" in other lending markets) and ensures the pair is able to resume operating normally immediately after adverse events.
+
+## Vault Account
+The Vault Account is a struct used for accounting in the Fraxlend Pair:
+
+```solidity
+struct VaultAccount {
+    uint128 amount;
+    uint128 shares;
+}
+```
+**The Vault Account** contains two elements:
+
+1. `amount` - represents a total amount
+
+2. `shares` - represents claims against the amount
+
+### Lending Accounting
+In lending, `amount` represents the total amount of assets deposited and the interest accrued.
+
+When lenders deposit assets, the amount of assets deposited increases `amount`, the `shares` value is also increased by an amount such that the ratio between `amount`/`shares` remains unchanged.
+
+When interest is accrued, `amount` is increased and `shares` remains the same.  Each lender's share of the underlying assets are measured in shares.
+
+When lenders remove liquidity, they redeem shares for the underlying asset.  The `shares` amount will be decreased by the number of shares redeemed, the `amount` will be decreased such that the ratio between `amount`/`shares` remains unchanged.
+
+### Borrow Accounting
+
+In borrowing, `amount` represents the total amount of assets borrowed and the interest accrued.
+
+When borrowers receive assets, the number of tokens received increases `amount`, the `shares` value is also increased by an amount such that the ratio between `amount`/`shares` remains unchanged.
+
+When interest is accrued, `amount` is increased and `shares` remains the same.  Each borrower's debt is measured in shares.
+
+When borrower's repay debt, `amount` is decremented by the amount of assets returned, `shares` is decreased by an amount such that the ratio of `amount`/`shares` remain unchanged.  An individual borrowers shares balance is decremented by this number of shares.
+
+## Interest Rates
+Each pair is configured to change interest rates as a function of Utilization.  Utilization is the total amount of deposited assets which have been lent to borrowers.  Fraxlend currently has three interest rate models available for use:
+
+1. [The Linear Rate](https://docs.frax.finance/fraxlend/advanced-concepts/interest-rates#linear-rate)
+
+2. [Time-Weighted Variable Rate](https://docs.frax.finance/fraxlend/advanced-concepts/interest-rates#time-weighted-variable-interest-rate)
+
+3. [Variable Rate V2](https://docs.frax.finance/fraxlend/advanced-concepts/interest-rates#variable-rate-v2-interest-rate)

@@ -1,0 +1,35 @@
+---
+title: Fraxswap Overview
+lang: en-US
+---
+*Legacy version of Frax Protocol docs are currently available on [docs.frax.finance](https://docs.frax.finance)*
+# Fraxswap Overview
+*A Unique Time Weighted Average Market Maker for Trustless Monetary Policy*
+
+## Summary
+Fraxswap is the first constant product automated market maker with an embedded time-weighted average market maker (TWAMM) for conducting large trades over long periods of time trustlessly. It is fully permissionless and the core AMM is based on Uniswap V2. This new AMM helps traders execute large orders efficiently. Fraxswap is a fully permissionless AMM which means others can create their own LP pairs in for any two tokens, like Uniswap.
+
+The motivation for building Fraxswap was to create a unique AMM with specialized features for algorithmic stablecoin monetary policy, forward guidance, and large sustained market orders to stabilize the price of one asset by contracting its supply or acquiring a specific collateral over a prolonged period. Specifically, Frax Protocol will use Fraxswap for:
+
+1. Buying back and burning FXS with AMO profits,
+2. Increase the stability of the pegs for the FRAX & FPI stablecoins
+3. Selling FRAX to purchase hard assets
+4. Deploying protocol-owned liquidity for income and utility, such as FRAX/FXS.
+
+<img
+  src="/images/protocol/fraxswap.png"
+  alt="Fraxswap icon"
+  width="200"
+  style={{ display: 'block', margin: 'auto', marginTop: '20px' }}
+/>
+
+## Ideal use cases by other protocols, stablecoin issuers, & DAOs include:
+1) Accumulation of a treasury asset (such as stablecoins) over time by slowly selling governance tokens.
+2) Buying back governance tokens slowly over time with DAO revenues & reserves.
+3) Acquiring another protocol's governance tokens slowly over time with the DAO's own governance tokens (similar to a corporate acquisition/merger but in a permissionless manner).
+4) Defending "risk free value" (RFV) for treasury based DAOs such as Olympus, Temple, and various projects where the backing of the governance token is socially or programmatically guaranteed.
+
+To use Fraxswap for monetary policy, the best method is to create a token pair and add protocol controlled liquidity. Then TWAMM orders can be placed in any size in either direction as desired for forward guidance and rebalancing of the DAO's net assets. See the technical specifications section to understand slippage calculations and liquidity optimizations for TWAMMs.
+
+Fraxswap UI: https://app.frax.finance/swap/main
+

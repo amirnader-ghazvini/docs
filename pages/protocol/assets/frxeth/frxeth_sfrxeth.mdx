@@ -1,0 +1,29 @@
+---
+title: frxETH and sfrxETH
+lang: en-US
+---
+
+# frxETH and sfrxETH
+*ETH in the Frax ecosystem comes in two forms, frxETH (Frax Ether), and sfrxETH (Staked Frax Ether).*
+
+## frxETH
+frxETH acts as a stablecoin loosely pegged to ETH, so that 1 frxETH always represents 1 ETH and the amount of frxETH in circulation matches the amount of ETH in the Frax ETH system. When ETH is sent to the frxETHMinter, an equivalent amount of frxETH is minted. Holding frxETH on its own is not eligible for staking yield and should be thought of as analogous as holding ETH. frxETH peg is defined as 1% on each side of 1.00 exchange rate meaning the frxETH peg is defended to keep the exchange rate between 1.01-.9900 ETH per 1 frxETH.
+
+<img
+  src="/images/protocol/frxETH.png"
+  alt="frxETH Logo"
+  width="200"
+  style={{ display: 'block', margin: 'auto', marginTop: '20px' }}
+/>
+
+## sfrxETH
+sfrxETH is a ERC-4626 vault designed to accrue the staking yield of the Frax ETH validators. At any time, frxETH can be exchanged for sfrxETH by depositing it into the sfrxETH vault, which allows users to earn staking yield on their frxETH. Over time, as validators accrue staking yield, an equivalent amount of frxETH is minted and added to the vault, allowing users to redeem their sfrxETH for a greater amount of frxETH than they deposited.
+
+The exhange rate of frxETH per sfrxETH increases over time as staking rewards are added to the vault. By holding sfrxETH you hold a % claim on an increasing amount of the vault's frxETH, splitting staking rewards up among sfrxETH holders proportional to their share of the total sfrxETH. This is similar to other autocompounding tokens like Aave's aUSDC and Compound's cUSDC.
+
+<img
+  src="/images/protocol/sfrxETH.png"
+  alt="sfrxETH Logo"
+  width="200"
+  style={{ display: 'block', margin: 'auto', marginTop: '20px' }}
+/>

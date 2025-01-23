@@ -1,0 +1,21 @@
+---
+title: RWA
+lang: en-US
+---
+
+# RWA
+*Real-World Assets that Yield the IORB Rate with Minimal Maturity Risk*
+
+## Overview
+FRAX V3 utilizes a real-world asset (RWA) strategy when the IORB oracle reports high rates. FRAX V3 only utilizes RWAs that yield very close to the IORB rate with as little duration risk as possible. Thus, only the following assets are considered at this time unless changed by the frxGov process:
+
+1) Short-dated United States treasury bills
+2) [Federal Reserve Overnight Repurchase Agreements](https://www.federalreserve.gov/monetarypolicy/standing-overnight-repurchase-agreement-facility.htm)
+3) USD deposited at Federal Reserve Bank master accounts
+4) Select shares of money market mutual funds
+
+FRAX V3 partner custodians primarily concentrate on only the above assets. RWA partners must report the custody, broker, banking, and trust arrangements employed in the course of holding the assets for FRAX V3 no later than monthly.
+
+[FIP-277](https://gov.frax.finance/t/fip-277-onboard-finrespbc-as-frax-v3s-offchain-rwa-partner/2492) enshrined FinresPBC as the first RWA partner for FRAX V3. FinresPBC will concentrate on securing “cash equivalent” low risk RWAs and optimize for yielding close to the IORB rate for the sFRAX staking vault.
+
+Additional RWA partners can be onboarded per governance voting through frxGov.
