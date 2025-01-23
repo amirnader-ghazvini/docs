@@ -1,6 +1,5 @@
 {
   "frxusd": "frxUSD",
-  "custodians": "Custodians",
   "amo": {"title":"AMOs", "display": "hidden"},
   "rwa":{"title":"RWA", "display": "hidden"},
   "sfrxusd": "sfrxUSD",
