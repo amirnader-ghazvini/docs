@@ -71,3 +71,17 @@ export const bammAddresses = {
   AMOOperator: { L1: 'N/A', L2: 'N/A' },
   AMOTimelock: { L1: 'N/A', L2: 'N/A' },
 }
+export const fraxlendAddresses = {
+  Factory: { L1: 'N/A', L2: 'N/A' },
+  Comptroller: { L1: 'N/A', L2: 'N/A' }
+}
+
+export const frxUsdAddresses = {
+  Token: { Ethereum: '0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29', Fraxtal: '0xfc00000000000000000000000000000000000001' },
+  Comptroller: { Ethereum: 'N/A', Fraxtal: 'N/A' }
+}
+
+export const sfrxUsdAddresses = {
+  Token: { Ethereum: '0xcf62F905562626CfcDD2261162a51fd02Fc9c5b6', Fraxtal: '0xfc00000000000000000000000000000000000008' },
+  Comptroller: { Ethereum: 'N/A', Fraxtal: 'N/A' }
+}

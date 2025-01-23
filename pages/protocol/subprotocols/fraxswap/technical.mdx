@@ -1,0 +1,41 @@
+---
+title: Fraxswap Technical Details
+lang: en-US
+---
+*Legacy version of Frax Protocol docs are currently available on [docs.frax.finance](https://docs.frax.finance)*
+# Fraxswap Technical Details
+
+## Diagram
+<figure style={{ textAlign: 'center', marginTop: '20px' }}>
+  <img
+    src="/images/protocol/fraxswap_black.png"
+    alt="Fraxswap"
+    style={{ display: 'block', margin: 'auto' }}
+  />
+  <figcaption style={{ marginTop: '10px', fontSize: '14px', color: '#555' }}>
+    Diagram of order flow on a Fraxswap pair with a TWAMM order active.
+  </figcaption>
+</figure>
+
+
+## Core AMM
+The Core AMM for Fraxswap is Uniswap V2 and based on the full range xy=k constant product design. Fraxswap has adhered to many of the design decisions of Uniswap V2 as it extended the codebase to support TWAMMs. Fraxswap v2 plans to support concentrated liquidity & correlated asset liquidity in a unique & novel way to allow TWAMM functionality across such pairs as well.
+
+Extensive documentation on Uniswap core functionality can be found here: https://docs.uniswap.org/protocol/V2/concepts/protocol-overview/how-uniswap-works
+
+## Time-weighted Average Market Maker (TWAMM)
+Fraxswap is the first live TWAMM implementation. The embedded TWAMM adheres to Paradigm’s original whitepaper specifications. Features mentioned in the whitepaper are used to optimize the execution of long-term orders which include: order pooling and aligning order expiries (hourly). Long-term orders are executed prior to any interaction with Fraxswap, this means the long-term orders are executed first before the AMM interaction and once per block (see above schematic). Fraxswap implements an approximation formula of Paradigm’s original formula and allows for a simplified, more gas-efficient TWAMM.
+
+The TWAMM whitepaper describes the fundamental mechanics:
+"Each TWAMM instance facilitates trading between a particular pair of assets, such as ETH and [FRAX].
+
+The TWAMM contains an embedded AMM, a standard constant-product market maker for [...] two assets. Anyone may trade with this embedded AMM at any time, just as if it were a normal AMM.
+Traders can submit long-term orders to the TWAMM, which are orders to sell a fixed amount of one of the assets over a fixed number of blocks — say, an order to sell 100 ETH over the next 2,000 blocks.
+The TWAMM breaks these long-term orders into infinitely many infinitely small virtual sub-orders, which trade against the embedded AMM at an even rate over time. Processing transactions for each of these virtual sub-orders individually would cost infinite gas, but a closed-form mathematical formula allows us to calculate their cumulative effect only when needed.
+The execution of long-term orders will push the embedded AMM's price away from prices on other markets over time. When this happens, arbitrageurs will trade against the embedded AMM's price to bring it back in line, ensuring good execution for long-term orders.
+For example, if long-term sells have made ETH cheaper on the embedded AMM than it is on a particular centralized exchange, arbitrageurs will buy ETH from the embedded AMM, bringing its price back up, and sell it on the centralized exchange for a profit."
+
+Interactive comparison of Paradigm’s TWAMM formula and Fraxswap’s TWAMM formula can be found at: https://www.desmos.com/calculator/wp4zrkh6uj
+
+## Code
+Public Repo: https://github.com/FraxFinance/dev-fraxswap

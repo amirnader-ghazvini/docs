@@ -2,5 +2,6 @@
   "overview": "Overview",
   "cpi": "CPI Oracle",
   "controller_pool":"FPI Controller Pool",
-  "fpis":"FPIS (Phased out)"
+  "fpis":{"title":"FPIS (Phased out)", "display": "hidden"},
+  "addresses": "Addresses"
 }

@@ -1,8 +1,8 @@
 {
   "frxusd": "frxUSD",
   "custodians": "Custodians",
-  "amo":"AMOs",
-  "rwa":"RWA",
+  "amo": {"title":"AMOs", "display": "hidden"},
+  "rwa":{"title":"RWA", "display": "hidden"},
   "sfrxusd": "sfrxUSD",
   "fxb": "FXBs",
   "addresses": "Addresses"

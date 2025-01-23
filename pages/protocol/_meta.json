@@ -3,9 +3,7 @@
   "assets": "Assets",
   "subprotocols": "Subprotocols",
   "fxs": "FXS & veFXS",
-  "crosschain": "Crosschain Solutions",
-  "governance": "Governance",
+  "crosschain": "Crosschain Strategy",
   "security": "Security",
-  "integration": "Integration",
-  "miscellaneous": "Miscellaneous"
+  "integration": "Integration"
 }
