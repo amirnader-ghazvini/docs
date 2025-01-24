@@ -77,11 +77,21 @@ export const fraxlendAddresses = {
 }
 
 export const frxUsdAddresses = {
-  Token: { Ethereum: '0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29', Fraxtal: '0xfc00000000000000000000000000000000000001' },
+  Token: { Ethereum: '0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29', Fraxtal: '0xfc00000000000000000000000000000000000001', OFT:'0x80eede496655fb9047dd39d9f418d5483ed600df' },
   Comptroller: { Ethereum: 'N/A', Fraxtal: 'N/A' }
 }
 
 export const sfrxUsdAddresses = {
-  Token: { Ethereum: '0xcf62F905562626CfcDD2261162a51fd02Fc9c5b6', Fraxtal: '0xfc00000000000000000000000000000000000008' },
+  Token: { Ethereum: '0xcf62F905562626CfcDD2261162a51fd02Fc9c5b6', Fraxtal: '0xfc00000000000000000000000000000000000008', OFT:'0x5bff88ca1442c2496f7e475e9e7786383bc070c0' },
+  Comptroller: { Ethereum: 'N/A', Fraxtal: 'N/A' }
+}
+
+export const frxEthAddresses = {
+  Token: { Ethereum: '0x5e8422345238f34275888049021821e8e08caa1f', Fraxtal: 'wfrxETH: 0xfc00000000000000000000000000000000000006', OFT:'0x43eDD7f3831b08FE70B7555ddD373C8bF65a9050' },
+  Comptroller: { Ethereum: 'N/A', Fraxtal: 'N/A' }
+}
+
+export const sfrxEthAddresses = {
+  Token: { Ethereum: '0xac3E018457B222d93114458476f3E3416Abbe38F', Fraxtal: '0xFC00000000000000000000000000000000000005', OFT:'0x3ec3849c33291a9ef4c5db86de593eb4a37fde45' },
   Comptroller: { Ethereum: 'N/A', Fraxtal: 'N/A' }
 }

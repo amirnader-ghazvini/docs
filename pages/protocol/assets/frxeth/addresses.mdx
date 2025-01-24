@@ -8,25 +8,35 @@ import * as mainnet from '~/misc/constants/mainnet';
 ## Assets
 <details>
 <summary>frxETH</summary>
-| Chain     | Address                                                |
-| :-------- | :----------------------------------------------------- |
-| Ethereum  | {<code>{mainnet.fxbAddresses.FXB2024.L1}</code>}       |
-| Fraxtal   | {<code>{mainnet.fxbAddresses.FXB2024Auction.L1}</code>}|
+| Chain     | type     | Address                                                |
+| :-------- | :------- | :----------------------------------------------------- |
+| Ethereum  | Native   | {<code>{mainnet.frxEthAddresses.Token.Ethereum}</code>}|
+| Fraxtal   | Native   | {<code>{mainnet.frxEthAddresses.Token.Fraxtal}</code>} |
 </details>
 
 <details>
 <summary>sfrxETH</summary>
-| Chain     | Address                                                |
-| :-------- | :----------------------------------------------------- |
-| Ethereum  | {<code>{mainnet.fxbAddresses.FXB2024.L1}</code>}       |
-| Fraxtal   | {<code>{mainnet.fxbAddresses.FXB2024Auction.L1}</code>}|
+| Chain     | type     | Address                                                 |
+| :-------- | :------- | :------------------------------------------------------ |
+| Ethereum  | Native   | {<code>{mainnet.sfrxEthAddresses.Token.Ethereum}</code>}|
+| Fraxtal   | Native   | {<code>{mainnet.sfrxEthAddresses.Token.Fraxtal}</code>} |
 </details>
-TODO
+
 
 ## Operations Contracts
-| Chain            | Name            | Contract                                               |
-| :--------------- | :-------------- | :----------------------------------------------------- |
-| Ethereum         | Comptroller     | {<code>{mainnet.fxbAddresses.FXBFactory.L2}</code>}    |
+| Chain            | Name                      | Contract                                          |
+| :--------------- | :------------------------ | :------------------------------------------------ |
+| Ethereum         | BeaconOracle              | ```0xA2901F3EE8f4E9F5baC5379BC0CD1F8341280AB5```  |
+| Ethereum         | CurveLsdAmo               | ```0xEcb9bBb97BD3C23e8f176075EDB3c68B9a1869Ae```  |
+| Ethereum         | CurveLsdAmoHelper         | ```0x823F92b5fF0062EDc20F0545ec88f2f3c273cCbd```  |
+| Ethereum         | EtherRouter               | ```0x5acAf61d339dd123e60ba450Ea38fbC49445007C```  |
+| Ethereum         | FraxEtherMinter (V2)      | ```0x7Bc6bad540453360F744666D625fec0ee1320cA3```  |
+| Ethereum         | FraxEtherRedemptionQueueV2| ```0xfDC69e6BE352BD5644C438302DE4E311AAD5565b```  |
+| Ethereum         | LendingPool               | ```0x24A1d1671a3Bd1C3cABb9B10724a4127d84e1Da0```  |
+| Ethereum         | VariableInterestRate      | ```0x2fA48925696EbBF1F4Fc08228dA06021f1806544```  |
+| Ethereum         | BeaconOracle              | ```0xA2901F3EE8f4E9F5baC5379BC0CD1F8341280AB5```  |
 
-
-TODO
+## Multisigs
+| Chain            | Name            | Contract                                          |
+| :--------------- | :-------------- | :------------------------------------------------ |
+| Ethereum         | Comptroller     | ```0x8306300ffd616049FD7e4b0354a64Da835c1A81C```  |
