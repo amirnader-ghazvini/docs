@@ -1,0 +1,182 @@
+---
+title: Indexers
+lang: en-US
+---
+
+# Indexers
+## Goldsky
+[Goldsky](https://goldsky.com/) is a high-performance data indexing provider for Fraxtal that makes it easy to extract, transform, and load on-chain data to power both application and analytics use cases.
+
+<details>
+<summary> Quick Start </summary>
+### Getting started
+*You can find the full documentation [here](https://docs.goldsky.com/chains/fraxtal#install-goldskys-cli-and-log-in)*
+
+To use Goldsky, you’ll need to create an account, install the CLI, and log in.
+
+1. Install the Goldsky CLI:
+
+```bash
+$ curl https://goldsky.com | sh
+```
+
+2. Go to your [Project Settings](https://app.goldsky.com/dashboard/settings) page and create an API key.
+
+3. Back in your Goldsky CLI, log into your Project by running the command ```goldsky login``` and paste your API key.
+
+4. Now that you are logged in, run ```goldsky``` to get started.
+
+
+5. Fraxtal subgraphs can be deployed on Goldsky in 2 ways:
+
+- Via CLI from a local subgraph configuration file. If you are familiar with developing subgraphs already, you'll be familiar with this approach; after defining a subgraph locally (with a ```subgraph.yaml``` file, a ```schema.graphql``` file, and the necessary mappings to translate raw event data into the entities defined in the schema), you can deploy subgraphs to Goldsky (once the Goldsky CLI is installed) using ```goldsky subgraph deploy <name>/<version> --path .```. For more, read the [step-by-step guide](https://docs.goldsky.com/get-started/subgraphs).
+- Via instant subgraphs, where you can pass through a contract address and the ABI for that contract. This is a quick-start option that automatically generates the underlying subgraph configuration files on your behalf, making it easy to extract blockchain event data and serve it as an API endpoint without complex setup. Use the ```--from-abi``` flag in the command above instead of ```--path```. For more, read the [no-code subgraphs guide](https://docs.goldsky.com/subgraphs/guides/create-a-no-code-subgraph).
+
+Fraxtal Mainnet is available at the chain slug ```frax-mainnet``` , with testnet support coming soon.
+</details>
+
+## The Graph
+
+[The Graph](https://thegraph.com/) provides an easy way to query smart contract data through APIs known as subgraphs. The Graph’s infrastructure relies on a decentralized network of indexers, enabling your dapp to become truly decentralized.
+
+<details>
+<summary> Quick Start </summary>
+### Getting started
+
+#### 1. Initialize your subgraph project
+
+- **Create a subgraph on Subgraph Studio⁠:** Go to the [Subgraph Studio](https://thegraph.com/studio/) and connect your wallet. Once your wallet is connected, you can begin by clicking “Create a Subgraph”. When choosing a name, it is recommended to use Title Case: “Subgraph Name Chain Name.”
+
+<figure style={{ textAlign: 'center', marginTop: '20px' }}>
+  <img
+    src="https://raw.githubusercontent.com/alinobrasil/the_graph_getting_started/refs/heads/fraxtal/img/studio-create-subgraph.png"
+    alt="Create a Subgraph"
+    style={{ display: 'block', margin: 'auto' }}
+  />
+</figure>
+
+You will then land on your subgraph’s page. All the CLI commands you need will be visible on the right side of the page:
+
+<figure style={{ textAlign: 'center', marginTop: '20px', marginRight: '50px' ,marginLeft: '50px' }}>
+  <img
+    src="https://raw.githubusercontent.com/alinobrasil/the_graph_getting_started/refs/heads/fraxtal/img/studio-graphcli-commands.png"
+    alt="CLI commands"
+    style={{ display: 'block', margin: 'auto' }}
+  />
+</figure>
+
+- **Install the Graph CLI⁠ :** On your local machine run the following:
+```bash
+$ npm install -g @graphprotocol/graph-cli
+```
+
+- **Initialize your Subgraph⁠ :** You can copy this directly from your subgraph page to include your specific subgraph slug:
+```bash
+$ graph init --studio <SUBGRAPH_SLUG>
+```
+You’ll be prompted to provide some info on your subgraph like this:
+
+<figure style={{ textAlign: 'center', marginTop: '20px', marginRight: '50px' ,marginLeft: '50px' }}>
+  <img
+    src="https://raw.githubusercontent.com/alinobrasil/the_graph_getting_started/refs/heads/fraxtal/img/cli-sample.png"
+    alt="cli sample"
+    style={{ display: 'block', margin: 'auto' }}
+  />
+</figure>
+
+Simply have your contract verified on the block explorer and the CLI will automatically obtain the ABI and set up your subgraph. The default settings will generate an entity for each event.
+
+#### 2. Deploy & Publish
+
+- **Deploy to Subgraph Studio⁠:**
+
+First run these commands:
+
+```bash
+$ graph codegen
+$ graph build
+```
+
+Then run these to authenticate and deploy your subgraph. You can copy these commands directly from your subgraph’s page in Studio to include your specific deploy key and subgraph slug:
+
+```bash
+$ graph auth --studio <DEPLOY_KEY>
+$ graph deploy --studio <SUBGRAPH_SLUG>
+```
+
+You will be asked for a version label. You can enter something like v0.0.1, but you’re free to choose the format.
+
+- **Test your subgraph⁠⁠:**
+
+You can test your subgraph by making a sample query in the playground section. The Details tab will show you an API endpoint. You can use that endpoint to test from your dapp.
+
+<figure style={{ textAlign: 'center', marginTop: '20px', marginRight: '50px' ,marginLeft: '50px' }}>
+  <img
+    src="https://raw.githubusercontent.com/alinobrasil/the_graph_getting_started/refs/heads/fraxtal/img/studio-playground.png"
+    alt="Playground"
+    style={{ display: 'block', margin: 'auto' }}
+  />
+</figure>
+
+- **Publish Your Subgraph to The Graph’s Decentralized Network⁠:**
+
+Once your subgraph is ready to be put into production, you can publish it to the decentralized network. On your subgraph’s page in Subgraph Studio, click on the Publish button:
+
+<figure style={{ textAlign: 'center', marginTop: '20px', marginRight: '50px' ,marginLeft: '50px' }}>
+  <img
+    src="https://raw.githubusercontent.com/alinobrasil/the_graph_getting_started/refs/heads/fraxtal/img/studio-publish-button.png"
+    alt="publish button"
+    style={{ display: 'block', margin: 'auto' }}
+  />
+</figure>
+
+You'll need some ETH on Arbitrum One to create an on-chain transaction. The Graph's smart contracts are all on Arbitrum One, even if your subgraph is indexing data from another chain.
+
+<figure style={{ textAlign: 'center', marginTop: '20px', marginRight: '50px' ,marginLeft: '50px' }}>
+  <img
+    src="https://raw.githubusercontent.com/alinobrasil/the_graph_getting_started/refs/heads/fraxtal/img/studio-publish-modal.png"
+    alt="Publish screen"
+    style={{ display: 'block', margin: 'auto' }}
+  />
+</figure>
+
+> **Note:** When publishing, a "Partial Indexer Support" alert means subgraphs on this chain are indexed by The Graph's default indexer but not by independent indexers. Testnets always have this limitation. For mainnets, this warning will go away after a voting process enables indexer rewards for the chain, at which point you can attract multiple indexers to your subgraph.
+
+#### 3. Query your Subgraph
+
+Congratulations! You can now query your subgraph on the decentralized network!
+
+For any subgraph on the decentralized network, you can start querying it by passing a GraphQL query into the subgraph’s query URL which can be found at the top of its Explorer page.
+
+Here’s an example from the [CryptoPunks Ethereum subgraph](https://thegraph.com/explorer/subgraphs/HdVdERFUe8h61vm2fDyycHgxjsde5PbB832NHgJfZNqK) by Messari:
+
+<figure style={{ textAlign: 'center', marginTop: '20px', marginRight: '50px' ,marginLeft: '50px' }}>
+  <img
+    src="https://raw.githubusercontent.com/alinobrasil/the_graph_getting_started/refs/heads/main/img/explorer-query-url.png"
+    alt="Query URL"
+    style={{ display: 'block', margin: 'auto' }}
+  />
+</figure>
+
+The query URL for this subgraph is:
+
+`https://gateway.network.thegraph.com/api/`**[api-key]**`/subgraphs/id/HdVdERFUe8h61vm2fDyycgxjsde5PbB832NHgJfZNqK`
+
+Now, you simply need to fill in your own API Key to start sending GraphQL queries to this endpoint.
+
+- **Getting your own API Key⁠:**
+
+<figure style={{ textAlign: 'center', marginTop: '20px', marginRight: '50px' ,marginLeft: '50px' }}>
+  <img
+    src="https://raw.githubusercontent.com/alinobrasil/the_graph_getting_started/refs/heads/main/img/getting-api-key.png"
+    alt="API keys"
+    style={{ display: 'block', margin: 'auto' }}
+  />
+</figure>
+
+In Subgraph Studio, you’ll see the “API Keys” menu at the top of the page. Here you can create API Keys.
+</details>
+
+
+
+

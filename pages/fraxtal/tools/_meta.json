@@ -1,5 +1,7 @@
 {
   "block-explorers": "Block explorers",
   "bridges": "Bridges",
-  "oracles": "Oracles"
+  "oracles": "Oracles",
+  "faucets": "Faucets",
+  "indexers": "Indexers"
 }
